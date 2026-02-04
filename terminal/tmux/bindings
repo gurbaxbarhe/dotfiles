@@ -1,0 +1,36 @@
+# Prefix: Ctrl + V
+unbind C-b
+set-option -g prefix C-v
+bind-key C-v send-prefix
+
+# Updated Prefix Bindings
+bind-key d kill-pane           # Prefix + d = kill current pane
+bind-key f kill-window         # Prefix + f = kill current window
+
+# Direct Bindings (NO Prefix Needed)
+bind-key -n C-d split-window -v -l 45 -c '#{pane_current_path}' # Ctrl + d = new pane
+
+# Create new window and set up the split layout
+bind-key -n C-f new-window \; \
+    split-window -v -l 45 -c '#{pane_current_path}' \; \
+    select-pane -t :.0 \; select-pane -T "Git" \; \
+    select-pane -t :.1 \; select-pane -T "Work" \; \
+    send-keys -t :.0 "while true; do clear; CURRENT_PATH=\$(tmux display-message -p -t ':.1' '#{pane_current_path}'); echo \"Work pane: \$CURRENT_PATH\"; sleep 1; done" C-m \; \
+    select-pane -t :.1
+
+bind-key -n C-w kill-pane       # Ctrl + w = kill current pane
+bind-key -n C-g previous-window # Ctrl + g = previous window
+bind-key -n C-q select-pane -t :.+ # Ctrl + q = next pane
+
+# Bar configuration
+set-option -g status-position top
+set-option -g status-right " \"#{pane_title}\" %y-%m-%d %H:%M "
+
+# Enable more scrollback
+set-option -g history-limit 10000
+
+# Enable mouse
+set-option -g mouse on
+
+# Speed up repeat
+set-option -g repeat-time 200

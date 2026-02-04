@@ -1,0 +1,83 @@
+{
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#ffffff8b",
+        "tab.activeBackground": "#00305f",
+        "tab.activeForeground": "#FFFFFF",
+        "tab.unfocusedActiveBorder": "#FFFFFF",
+        "tab.activeBorderTop": "#FFFFFF",
+        "statusBar.foreground": "#FFFFFF",
+        "activityBarBadge.background": "#86cbff",
+        "activityBar.activeBorder": "#FFFFFF",
+        "panelTitle.activeBorder": "#FFFFFF",
+        "panelTitle.activeForeground": "#86cbff",
+        "panelTitle.inactiveForeground": "#ffffff",
+        "terminal.ansiBrightBlack": "#FFFFFF",
+        "terminal.tab.activeBorder": "#FFFFFF",
+        "focusBorder": "#FFFFFF",
+        "terminal.foreground": "#E3E4E8",
+        "terminal.ansiBrightCyan": "#9afba1", 
+        "terminal.ansiBlue": "#86cbff",
+        "terminal.ansiBrightBlue": "#89ccfd",
+        "terminal.ansiBrightGreen": "#9afba1",
+        "terminal.selectionBackground": "#1992ff45",
+        "terminalCursor.foreground": "#b99ded",
+        "terminal.ansiBrightYellow": "#86cbff" 
+    },
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "variable",
+                "settings": {
+                    "foreground": "#2BD058"
+                }
+            },
+            {
+                "scope": "function",
+                "settings": {
+                    "foreground": "#2BD058"
+                }
+            }
+        ]
+    },
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.integrated.macOptionIsMeta": true,
+    "workbench.startupEditor": "none",
+    "security.workspace.trust.untrustedFiles": "open",
+    "git.autofetch": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "git.enableSmartCommit": true,
+    "githubPullRequests.pullBranch": "never",
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": true
+    },
+    "workbench.editorAssociations": {
+        "*.copilotmd": "vscode.markdown.preview.editor",
+        "*.csv": "gc-excelviewer-csv-editor"
+    },
+    "workbench.sideBar.location": "right",
+    "security.promptForLocalFileProtocolHandling": false,
+    "go.toolsManagement.autoUpdate": true,
+    "cursor-retrieval.canAttemptGithubLogin": false,
+    "workbench.colorTheme": "GitHub Dark",
+    "githubPullRequests.fileListLayout": "flat",
+    "testing.coverageToolbarEnabled": true,
+    "cursor.cpp.disabledLanguages": [
+        "plaintext"
+    ],
+    "window.zoomLevel": -0.25,
+    "workbench.editor.enablePreview": true,
+    "workbench.settings.applyToAllProfiles": [
+        
+    ],
+    "diffEditor.renderSideBySide": false,
+    "editor.dropIntoEditor.preferences": [],
+    "[yaml]": {
+        "diffEditor.ignoreTrimWhitespace": true
+    },
+    "githubPullRequests.createOnPublishBranch": "never",
+    "editor.insertSpaces": false
+}
