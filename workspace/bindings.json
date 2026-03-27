@@ -66,7 +66,7 @@
         "when": "editorFocus"
     },
     {
-        "key": "shift+cmd+g",
+        "key": "shift+cmd+x",
         "command": "workbench.view.scm",
         "when": "workbench.scm.active"
     },
@@ -76,7 +76,7 @@
         "when": "workbench.scm.active"
     },
     {
-        "key": "shift+cmd+g",
+        "key": "shift+cmd+x",
         "command": "workbench.view.scm",
         "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
     },
@@ -142,5 +142,23 @@
     {
         "key": "shift+cmd+c",
         "command": "git.openChange"
+    },
+    {
+        "key": "shift+cmd+2",
+        "command": "workbench.view.extension.codexViewContainer"
+    },
+    {
+        "key": "alt+cmd+s",
+        "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
+        "when": "cursor.agentIdeUnification.enabled == true && !isAuxiliaryWindowFocusedContext"
+    },
+    {
+        "key": "shift+cmd+x",
+        "command": "-workbench.view.extensions",
+        "when": "viewContainer.workbench.view.extensions.enabled"
+    },
+    {
+        "key": "shift+cmd+g",
+        "command": "pr:github.focus"
     }
 ]
