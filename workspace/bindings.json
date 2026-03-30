@@ -140,14 +140,6 @@
         "command": "-composer.showComposerHistory"
     },
     {
-        "key": "shift+cmd+c",
-        "command": "git.openChange"
-    },
-    {
-        "key": "shift+cmd+2",
-        "command": "workbench.view.extension.codexViewContainer"
-    },
-    {
         "key": "alt+cmd+s",
         "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
         "when": "cursor.agentIdeUnification.enabled == true && !isAuxiliaryWindowFocusedContext"
@@ -160,5 +152,9 @@
     {
         "key": "shift+cmd+g",
         "command": "pr:github.focus"
+    },
+    {
+        "key": "shift+cmd+c",
+        "command": "pr.openDiffView"
     }
 ]
