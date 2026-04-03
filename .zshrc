@@ -126,6 +126,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="$HOME/.local/bin:$PATH"
  
-if [ -z "$TMUX" ]; then
+if [ -z "$TMUX" ] && [[ $- == *i* ]] && [ -t 0 ]; then
   /opt/homebrew/bin/tmux new-window -t default -c "$(pwd)" 2>/dev/null && /opt/homebrew/bin/tmux attach -t default || /opt/homebrew/bin/tmux new -s default
 fi
