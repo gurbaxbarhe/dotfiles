@@ -127,5 +127,10 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.local/bin:$PATH"
  
 if [ -z "$TMUX" ] && [[ $- == *i* ]] && [ -t 0 ]; then
-  /opt/homebrew/bin/tmux new-window -t default -c "$(pwd)" 2>/dev/null && /opt/homebrew/bin/tmux attach -t default || /opt/homebrew/bin/tmux new -s default
+  if [ "$TERM_PROGRAM" = "vscode" ]; then
+    SESSION="cursor"
+  else
+    SESSION="iterm"
+  fi
+  /opt/homebrew/bin/tmux new-window -t "$SESSION" -c "$(pwd)" 2>/dev/null && /opt/homebrew/bin/tmux attach -t "$SESSION" || /opt/homebrew/bin/tmux new -s "$SESSION"
 fi
