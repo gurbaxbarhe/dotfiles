@@ -11,17 +11,32 @@
         "panelTitle.activeBorder": "#FFFFFF",
         "panelTitle.activeForeground": "#86cbff",
         "panelTitle.inactiveForeground": "#ffffff",
-        "terminal.ansiBrightBlack": "#FFFFFF",
         "terminal.tab.activeBorder": "#FFFFFF",
         "focusBorder": "#FFFFFF",
-        "terminal.foreground": "#E3E4E8",
-        "terminal.ansiBrightCyan": "#9afba1", 
-        "terminal.ansiBlue": "#86cbff",
-        "terminal.ansiBrightBlue": "#89ccfd",
-        "terminal.ansiBrightGreen": "#9afba1",
-        "terminal.selectionBackground": "#1992ff45",
-        "terminalCursor.foreground": "#b99ded",
-        "terminal.ansiBrightYellow": "#86cbff" 
+        "panel.background": "#1f2428",
+        "panelSection.background": "#1f2428",
+        "panelSectionHeader.background": "#1f2428",
+        "panelStickyScroll.background": "#1f2428",
+        "editorGroupHeader.tabsBackground": "#1f2428",
+        "terminal.background": "#1f2428",
+        "terminal.foreground": "#ffffff",
+        "terminal.ansiBlack": "#000000",
+        "terminal.ansiRed": "#73ceff",
+        "terminal.ansiGreen": "#73ceff",
+        "terminal.ansiYellow": "#ffc100",
+        "terminal.ansiBlue": "#bf9cf3",
+        "terminal.ansiMagenta": "#ff77ff",
+        "terminal.ansiCyan": "#ff6d67",
+        "terminal.ansiWhite": "#bbbbbb",
+        "terminal.ansiBrightBlack": "#555555",
+        "terminal.ansiBrightRed": "#73ceff",
+        "terminal.ansiBrightGreen": "#73ceff",
+        "terminal.ansiBrightYellow": "#ffc100",
+        "terminal.ansiBrightBlue": "#bf9cf3",
+        "terminal.ansiBrightMagenta": "#ff55ff",
+        "terminal.ansiBrightCyan": "#ff6d67",
+        "terminal.ansiBrightWhite": "#ffffff",
+        "terminalCursor.foreground": "#73ceff"
     },
     "explorer.openEditors.dynamicHeight": false, 
     "explorer.confirmDelete": false,
@@ -56,7 +71,7 @@
         "diffEditor.ignoreTrimWhitespace": true
     },
     "workbench.editorAssociations": {
-        "*.copilotmd": "vscode.markdown.preview.editor"
+        "*.copilotmd": "vscode.markdown.preview.editor",
     },
     "security.promptForLocalFileProtocolHandling": false,
     "go.toolsManagement.autoUpdate": true,
@@ -78,13 +93,6 @@
     },
     "githubPullRequests.createOnPublishBranch": "never",
     "editor.insertSpaces": false,
-    "mssql.connectionGroups": [
-        {
-            "name": "ROOT",
-            "id": "30ED18AC-D97A-4873-920D-911C750A0249"
-        }
-    ],
-    "mssql.connections": [],
     "window.zoomLevel": 0.1,
     "python.createEnvironment.trigger": "off"
 }
