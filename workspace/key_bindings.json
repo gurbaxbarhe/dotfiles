@@ -154,7 +154,28 @@
         "command": "pr:github.focus"
     },
     {
+        "key": "cmd+right",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u0005" },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "cmd+left",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u0001" },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "workbench.action.terminal.kill"
+    },
+    {
         "key": "shift+cmd+c",
-        "command": "pr.openDiffView"
+        "command": "-glass.copyAgentDeeplink",
+        "when": "glassActiveAgentIsCloud && glassNoModalOpen && isGlassEmptyWorkspace && !terminalFocusInAny"
+    },
+    {
+        "key": "shift+cmd+c",
+        "command": "git.openChange"
     }
 ]
