@@ -77,7 +77,6 @@
     "cursor.cpp.disabledLanguages": [
         "plaintext"
     ],
-    "workbench.editor.enablePreview": false,
     "workbench.settings.applyToAllProfiles": [
         
     ],
@@ -89,5 +88,8 @@
     "githubPullRequests.createOnPublishBranch": "never",
     "editor.insertSpaces": false,
     "window.zoomLevel": 0.1,
-    "python.createEnvironment.trigger": "off"
+    "python.createEnvironment.trigger": "off",
+    "workbench.editor.enablePreview": false,
+    "terminal.integrated.revealOnOutput": "never",
+    "terminal.integrated.hideOnStartup": "always"
 }
