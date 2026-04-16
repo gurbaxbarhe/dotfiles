@@ -1,0 +1,37 @@
+# GitHub Dark theme for nano, matched to Cursor setup
+
+# --- Editor options ---
+set linenumbers
+set mouse
+set softwrap
+set atblanks
+set autoindent
+set smarthome
+set indicator
+set minibar
+set stateflags
+set zap
+set historylog
+set positionlog
+set tabsize 4
+# user prefers real tabs (editor.insertSpaces: false in Cursor)
+
+# --- GitHub Dark UI palette ---
+# bg #0d1117  chrome #161b22  fg #c9d1d9  muted #6e7681  accent #58a6ff
+set titlecolor    #c9d1d9,#161b22
+set numbercolor   #6e7681,#0d1117
+set statuscolor   #c9d1d9,#161b22
+set keycolor      #58a6ff,#161b22
+set functioncolor #8b949e,#161b22
+set promptcolor   #c9d1d9,#161b22
+set errorcolor    #ffffff,#da3633
+set selectedcolor #c9d1d9,#1f6feb
+set stripecolor   ,#161b22
+set scrollercolor #30363d,#0d1117
+set indicatorcolor #c9d1d9,#161b22
+set spotlightcolor #0d1117,#f0883e
+set minicolor     #c9d1d9,#0d1117
+
+# --- Syntax highlighting ---
+include "/opt/homebrew/share/nano/*.nanorc"
+include "/opt/homebrew/share/nano/extra/*.nanorc"
