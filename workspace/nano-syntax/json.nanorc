@@ -1,0 +1,20 @@
+## GitHub Dark — JSON / JSONC
+
+syntax "json" "\.json[c5]?$"
+comment "//"
+
+# Numbers
+color "#8cf" "-?\<([0-9]+(\.[0-9]+)?)([eE][-+]?[0-9]+)?\>"
+
+# Literals
+color "#8cf" "\<(true|false|null)\>"
+
+# All strings (values)
+color "#adf" ""([^"\]|\\.)*""
+
+# Keys override string color ("key":)
+color "#8cf" ""([^"\]|\\.)*"[[:blank:]]*:"
+
+# Comments (JSONC / JSON5)
+color "#99a" "(^|[[:blank:]])//.*"
+color "#99a" start="/\*" end="\*/"

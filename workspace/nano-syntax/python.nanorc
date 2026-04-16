@@ -1,0 +1,35 @@
+## GitHub Dark — Python
+
+syntax "python" "\.py[iw3]?$"
+magic "Python script"
+comment "#"
+
+# Identifiers / function names (user override)
+color "#3d5" "\<[a-zA-Z_][a-zA-Z0-9_]*\>"
+
+# Numbers
+color "#8cf" "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?[jJ]?\>"
+color "#8cf" "\<0[xX][[:xdigit:]]+\>"
+color "#8cf" "\<0[bB][01]+\>"
+color "#8cf" "\<0[oO][0-7]+\>"
+
+# Built-in types / exceptions (orange)
+color "#fa5" "\<(int|float|complex|bool|str|bytes|bytearray|memoryview|list|tuple|dict|set|frozenset|range|type|object|slice|property|classmethod|staticmethod)\>"
+color "#fa5" "\<(Exception|BaseException|ArithmeticError|AssertionError|AttributeError|EOFError|FileNotFoundError|FileExistsError|ImportError|IndexError|KeyError|KeyboardInterrupt|LookupError|MemoryError|ModuleNotFoundError|NameError|NotImplementedError|OSError|OverflowError|RuntimeError|StopIteration|SyntaxError|SystemError|SystemExit|TypeError|UnicodeError|ValueError|Warning|ZeroDivisionError)\>"
+
+# Literals and special values
+color "#8cf" "\<(True|False|None|NotImplemented|Ellipsis|self|cls)\>"
+
+# Keywords
+color "#f87" "\<(and|as|assert|async|await|break|case|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|match|nonlocal|not|or|pass|raise|return|try|while|with|yield)\>"
+
+# Decorators
+color "#8cf" "^[[:blank:]]*@[a-zA-Z_][a-zA-Z0-9_.]*"
+
+# Strings (triple-quoted first, then single-line)
+color "#adf" start="[bBrRuUfF]?"""" end="""""
+color "#adf" start="[bBrRuUfF]?'''" end="'''"
+color "#adf" "[bBrRuUfF]?"([^"\]|\\.)*"|[bBrRuUfF]?'([^'\]|\\.)*'"
+
+# Comments
+color "#99a" "(^|[[:blank:]])#.*"

@@ -1,4 +1,6 @@
-# GitHub Dark theme for nano, matched to Cursor setup
+# GitHub Dark theme for nano, matched to Cursor setup.
+# Canonical location is this dotfiles dir; ~/.nanorc is a symlink to it.
+# Nano only accepts 3-digit hex (#RGB) in rc files (maps to nearest 256 palette).
 
 # --- Editor options ---
 set linenumbers
@@ -16,22 +18,25 @@ set positionlog
 set tabsize 4
 # user prefers real tabs (editor.insertSpaces: false in Cursor)
 
-# --- GitHub Dark UI palette ---
-# bg #0d1117  chrome #161b22  fg #c9d1d9  muted #6e7681  accent #58a6ff
-set titlecolor    #c9d1d9,#161b22
-set numbercolor   #6e7681,#0d1117
-set statuscolor   #c9d1d9,#161b22
-set keycolor      #58a6ff,#161b22
-set functioncolor #8b949e,#161b22
-set promptcolor   #c9d1d9,#161b22
-set errorcolor    #ffffff,#da3633
-set selectedcolor #c9d1d9,#1f6feb
-set stripecolor   ,#161b22
-set scrollercolor #30363d,#0d1117
-set indicatorcolor #c9d1d9,#161b22
-set spotlightcolor #0d1117,#f0883e
-set minicolor     #c9d1d9,#0d1117
+# --- GitHub Dark UI palette (3-digit hex approximations) ---
+# bg #011 · chrome #122 · fg #cdd · muted #789 · accent #5af
+set titlecolor    #cdd,#122
+set numbercolor   #789,#111
+set statuscolor   #cdd,#122
+set keycolor      #5af,#122
+set functioncolor #99a,#122
+set promptcolor   #cdd,#122
+set errorcolor    #fff,#d33
+set selectedcolor #cdd,#26e
+set stripecolor   ,#122
+set scrollercolor #333,#111
+set spotlightcolor #111,#f84
+set minicolor     #cdd,#111
 
 # --- Syntax highlighting ---
+# Custom GitHub Dark syntax files load FIRST so they win for matching file
+# extensions (first matching syntax takes precedence in nano). Stock files
+# handle languages we didn't customize (html, css, markdown, rust, etc.).
+include "/Users/gurbaxbarhe/Library/CloudStorage/OneDrive-Personal/Projects/dotfiles/workspace/nano-syntax/*.nanorc"
 include "/opt/homebrew/share/nano/*.nanorc"
 include "/opt/homebrew/share/nano/extra/*.nanorc"
