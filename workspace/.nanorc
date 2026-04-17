@@ -1,6 +1,21 @@
-# GitHub Dark theme for nano, matched to Cursor setup.
-# Canonical location is this dotfiles dir; ~/.nanorc is a symlink to it.
-# Nano only accepts 3-digit hex (#RGB) in rc files (maps to nearest 256 palette).
+# GitHub Dark theme for nano, matched to Cursor.
+# Canonical location: this dotfiles dir. ~/.nanorc is a symlink to it.
+#
+# Color notes (verified empirically against xterm-256color in nano 6/8):
+#   nano only accepts named colors or 3-digit #RGB. 3-digit hex is mapped to
+#   the nearest 6x6x6 cube slot (no grayscale-ramp access). Empirical map:
+#     #dbf -> idx 183 (#d7afff)  matches GH Dark identifier #D2A8FF
+#     #f88 -> idx 210 (#ff8787)  matches GH Dark keyword    #FF7B72
+#     #adf -> idx 153 (#afd7ff)  matches GH Dark string     #A5D6FF
+#     #8cf -> idx 117 (#87d7ff)  matches GH Dark number     #79C0FF
+#     #fa6 -> idx 215 (#ffaf5f)  matches GH Dark type       #FFA657
+#     #888 -> idx 102 (#878787)  matches GH Dark comment    #8B949E
+#     #5af -> idx 75  (#5fafff)  matches GH Dark link       #58A6FF
+#     #ccd -> idx 188 (#d7d7d7)  matches GH Dark fg         #C9D1D9
+#     #122 -> idx 16  (#000000)  near GH Dark chrome        #161B22
+#
+# Include order: nano picks the LAST matching syntax, not the first.
+# So stock files must come FIRST and custom GitHub-Dark files LAST.
 
 # --- Editor options ---
 set linenumbers
@@ -18,25 +33,15 @@ set positionlog
 set tabsize 4
 # user prefers real tabs (editor.insertSpaces: false in Cursor)
 
-# --- GitHub Dark UI palette (3-digit hex approximations) ---
-# bg #011 · chrome #122 · fg #cdd · muted #789 · accent #5af
-set titlecolor    #cdd,#122
-set numbercolor   #789,#111
-set statuscolor   #cdd,#122
-set keycolor      #5af,#122
-set functioncolor #99a,#122
-set promptcolor   #cdd,#122
-set errorcolor    #fff,#d33
-set selectedcolor #cdd,#26e
-set stripecolor   ,#122
-set scrollercolor #333,#111
-set spotlightcolor #111,#f84
-set minicolor     #cdd,#111
+# --- UI chrome: leave at nano defaults ---
+# (no set *color for titlebar, line numbers, status bar, help bar keys,
+#  prompts, errors, selection, stripe, scrollbar, spotlight, minibar — the
+#  terminal's default palette handles these cleanly.)
 
 # --- Syntax highlighting ---
-# Custom GitHub Dark syntax files load FIRST so they win for matching file
-# extensions (first matching syntax takes precedence in nano). Stock files
-# handle languages we didn't customize (html, css, markdown, rust, etc.).
-include "/Users/gurbaxbarhe/Library/CloudStorage/OneDrive-Personal/Projects/dotfiles/workspace/nano-syntax/*.nanorc"
+# Stock files FIRST (catch languages we didn't customize).
+# Custom GitHub-Dark files LAST so they win the last-match resolution
+# for languages they cover.
 include "/opt/homebrew/share/nano/*.nanorc"
 include "/opt/homebrew/share/nano/extra/*.nanorc"
+include "/Users/gurbaxbarhe/Library/CloudStorage/OneDrive-Personal/Projects/dotfiles/workspace/nano-syntax/*.nanorc"

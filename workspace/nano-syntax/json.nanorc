@@ -1,20 +1,20 @@
-## GitHub Dark — JSON / JSONC
+## GitHub Dark — JSON / JSONC / JSON5
 
 syntax "json-gh" "\.json[c5]?$"
 comment "//"
 
 # Numbers
-color lagoon "-?\<([0-9]+(\.[0-9]+)?)([eE][-+]?[0-9]+)?\>"
+color #8cf "-?\<([0-9]+(\.[0-9]+)?)([eE][-+]?[0-9]+)?\>"
 
 # Literals
-color lagoon "\<(true|false|null)\>"
+color #8cf "\<(true|false|null)\>"
 
-# All strings (values)
-color sky ""([^"\]|\\.)*""
+# All strings (values default)
+color #adf ""([^"\]|\\.)*""
 
-# Keys override string color ("key":)
-color lagoon ""([^"\]|\\.)*"[[:blank:]]*:"
+# Keys override string color ("key":) — purple identifier
+color #dbf ""([^"\]|\\.)*"[[:blank:]]*:"
 
 # Comments (JSONC / JSON5)
-color grey "(^|[[:blank:]])//.*"
-color grey start="/\*" end="\*/"
+color #888 "(^|[[:blank:]])//.*"
+color #888 start="/\*" end="\*/"

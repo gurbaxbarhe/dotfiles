@@ -3,32 +3,35 @@
 syntax "sql-gh" "\.(sql|ddl|dml)$"
 comment "--"
 
-# Identifiers / function names (user override)
-color mint "\<[a-zA-Z_][a-zA-Z0-9_]*\>"
+# Identifiers — purple (GH Dark support.function #D2A8FF), broad catch-all.
+color #dbf "\<[a-zA-Z_][a-zA-Z0-9_]*\>"
 
 # Numbers
-color lagoon "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?\>"
-color lagoon "\<0[xX][[:xdigit:]]+\>"
+color #8cf "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?\>"
+color #8cf "\<0[xX][[:xdigit:]]+\>"
 
 # Types (case-insensitive)
-icolor orange "\<(bigint|binary|bit|blob|bool|boolean|byte|bytea|char|character|clob|date|datetime|decimal|double|enum|float|int|integer|interval|json|jsonb|money|nchar|ntext|numeric|nvarchar|real|serial|smallint|text|time|timestamp|timestamptz|tinyint|uuid|varbinary|varchar|xml|year)\>"
+icolor #fa6 "\<(bigint|binary|bit|blob|bool|boolean|byte|bytea|char|character|clob|date|datetime|decimal|double|enum|float|int|integer|interval|json|jsonb|money|nchar|ntext|numeric|nvarchar|real|serial|smallint|text|time|timestamp|timestamptz|tinyint|uuid|varbinary|varchar|xml|year)\>"
 
 # SQL functions (case-insensitive)
-icolor orange "\<(abs|avg|cast|ceil|ceiling|char_length|coalesce|concat|convert|count|current_date|current_time|current_timestamp|current_user|date|day|extract|floor|format|greatest|hour|ifnull|isnull|least|length|lower|ltrim|max|min|minute|mod|month|now|nullif|position|power|rank|replace|round|row_number|rtrim|second|sqrt|substr|substring|sum|to_char|to_date|to_number|to_timestamp|trim|upper|year)\>"
+icolor #fa6 "\<(abs|avg|cast|ceil|ceiling|char_length|coalesce|concat|convert|count|current_date|current_time|current_timestamp|current_user|date|day|extract|floor|format|greatest|hour|ifnull|isnull|least|length|lower|ltrim|max|min|minute|mod|month|now|nullif|position|power|rank|replace|round|row_number|rtrim|second|sqrt|substr|substring|sum|to_char|to_date|to_number|to_timestamp|trim|upper|year)\>"
 
 # Literals (case-insensitive)
-icolor lagoon "\<(true|false|null|unknown)\>"
+icolor #8cf "\<(true|false|null|unknown)\>"
 
 # Keywords (case-insensitive)
-icolor peach "\<(add|all|alter|analyze|and|any|as|asc|backup|begin|between|both|by|call|cascade|case|check|column|commit|constraint|create|cross|current|cursor|database|databases|declare|default|delete|desc|describe|distinct|do|drop|each|else|elsif|end|escape|except|exec|execute|exists|explain|false|fetch|for|foreign|from|full|function|grant|group|having|if|ignore|in|index|inner|insert|into|is|join|key|left|like|limit|loop|match|merge|minus|modify|natural|no|not|null|of|offset|on|only|or|order|outer|over|partition|primary|procedure|purge|references|rename|replace|restrict|return|returns|revoke|right|rollback|savepoint|schema|select|set|show|some|start|table|tables|then|to|top|transaction|trigger|truncate|union|unique|until|update|use|using|values|view|when|where|while|window|with)\>"
+icolor #f88 "\<(add|all|alter|analyze|and|any|as|asc|backup|begin|between|both|by|call|cascade|case|check|column|commit|constraint|create|cross|current|cursor|database|databases|declare|default|delete|desc|describe|distinct|do|drop|each|else|elsif|end|escape|except|exec|execute|exists|explain|false|fetch|for|foreign|from|full|function|grant|group|having|if|ignore|in|index|inner|insert|into|is|join|key|left|like|limit|loop|match|merge|minus|modify|natural|no|not|null|of|offset|on|only|or|order|outer|over|partition|primary|procedure|purge|references|rename|replace|restrict|return|returns|revoke|right|rollback|savepoint|schema|select|set|show|some|start|table|tables|then|to|top|transaction|trigger|truncate|union|unique|until|update|use|using|values|view|when|where|while|window|with)\>"
 
 # Strings
-color sky "'([^'\]|''|\\.)*'"
+color #adf "'([^'\]|''|\\.)*'"
 
 # Quoted identifiers (backticks for MySQL, double quotes for Postgres)
-color normal "`[^`]*`"
-color normal ""[^"]*""
+color #ccd "`[^`]*`"
+color #ccd ""[^"]*""
 
 # Comments
-color grey "(^|[[:blank:]])--.*"
-color grey start="/\*" end="\*/"
+color #888 "(^|[[:blank:]])--.*"
+color #888 start="/\*" end="\*/"
+
+# Trailing whitespace
+color ,#122 "[[:space:]]+$"

@@ -1,38 +1,50 @@
 ## GitHub Dark — JavaScript / JSX
-## Uses nano's named 256-color palette for predictable mapping.
-## Rule order: broad first, specific last (later overrides earlier).
+## Colors: #dbf identifier  #f88 keyword  #adf string  #8cf literal/number
+##         #fa6 type        #888 comment  (see ~/.nanorc for mapping notes)
+## Rule order: broad first, specific last (nano applies later rules over earlier).
 
 syntax "javascript-gh" "\.([cm]?jsx?)$"
 magic "JavaScript source"
 comment "//"
 
-# Identifiers / function names (user override — broad catch-all)
-color mint "\<[a-zA-Z_$][a-zA-Z0-9_$]*\>"
+# Identifiers — purple (GH Dark support.function #D2A8FF), broad catch-all.
+# This paints all user-defined names (vars, functions, imports) purple.
+color #dbf "\<[a-zA-Z_$][a-zA-Z0-9_$]*\>"
 
 # Numbers
-color lagoon "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?n?\>"
-color lagoon "\<0[xX][[:xdigit:]]+n?\>"
-color lagoon "\<0[bB][01]+n?\>"
-color lagoon "\<0[oO][0-7]+n?\>"
+color #8cf "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?n?\>"
+color #8cf "\<0[xX][[:xdigit:]]+n?\>"
+color #8cf "\<0[bB][01]+n?\>"
+color #8cf "\<0[oO][0-7]+n?\>"
 
-# Built-in types
-color orange "\<(Array|Boolean|Number|Object|String|Symbol|Function|Promise|Map|Set|WeakMap|WeakSet|Date|RegExp|Error|TypeError|RangeError|SyntaxError|JSON|Math|console|process|Buffer|BigInt)\>"
+# Built-in classes / constructors — GH Dark's entity.name.class & support.class (orange)
+color #fa6 "\<(Array|Boolean|Number|Object|String|Symbol|Function|Promise|Map|Set|WeakMap|WeakSet|Date|RegExp|Error|TypeError|RangeError|SyntaxError|JSON|Math|BigInt|Infinity|NaN)\>"
 
-# Literals and special values
-color lagoon "\<(true|false|null|undefined|NaN|Infinity|this|super|globalThis|arguments)\>"
+# Built-in support variables — GH Dark's support.variable (orange, distinct
+# from user-defined variables)
+color #fa6 "\<(console|process|window|document|globalThis|Buffer)\>"
+
+# Built-in support functions — GH Dark's support.function (purple, #D2A8FF)
+color #dbf "\<(require|setTimeout|setInterval|clearTimeout|clearInterval|setImmediate|clearImmediate|queueMicrotask|structuredClone|parseInt|parseFloat|isNaN|isFinite|eval|encodeURI|decodeURI|encodeURIComponent|decodeURIComponent|fetch|alert|confirm|prompt)\>"
+
+# Literals (primitive constants)
+color #8cf "\<(true|false|null|undefined)\>"
 
 # Declaration & modifiers
-color peach "\<(var|let|const|function|class|extends|implements|interface|type|enum|namespace|static|public|private|protected|readonly|abstract|override|declare|async|await)\>"
+color #f88 "\<(var|let|const|function|class|extends|implements|interface|type|enum|namespace|static|public|private|protected|readonly|abstract|override|declare|async|await)\>"
 # Flow control
-color peach "\<(if|else|switch|case|default|for|while|do|break|continue|return|yield|throw|try|catch|finally)\>"
-# Operator-keywords
-color peach "\<(new|delete|typeof|instanceof|in|of|void)\>"
+color #f88 "\<(if|else|switch|case|default|for|while|do|break|continue|return|yield|throw|try|catch|finally)\>"
+# Operator and language keywords
+color #f88 "\<(new|delete|typeof|instanceof|in|of|void|this|super|arguments)\>"
 # Modules
-color peach "\<(import|export|from|as|require)\>"
+color #f88 "\<(import|export|from|as)\>"
 
-# Strings
-color sky ""([^"\]|\\.)*"|'([^'\]|\\.)*'|`([^`\]|\\.)*`"
+# Strings (double, single, template)
+color #adf ""([^"\]|\\.)*"|'([^'\]|\\.)*'|`([^`\]|\\.)*`"
 
 # Comments
-color grey "(^|[[:blank:]])//.*"
-color grey start="/\*" end="\*/"
+color #888 "(^|[[:blank:]])//.*"
+color #888 start="/\*" end="\*/"
+
+# Trailing whitespace highlight (GitHub Dark editor.gutter.background tint)
+color ,#122 "[[:space:]]+$"

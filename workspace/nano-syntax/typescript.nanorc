@@ -3,35 +3,44 @@
 syntax "typescript-gh" "\.tsx?$"
 comment "//"
 
-# Identifiers / function names (user override)
-color mint "\<[a-zA-Z_$][a-zA-Z0-9_$]*\>"
+# Identifiers — purple (GH Dark support.function #D2A8FF), broad catch-all.
+color #dbf "\<[a-zA-Z_$][a-zA-Z0-9_$]*\>"
 
 # Numbers
-color lagoon "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?n?\>"
-color lagoon "\<0[xX][[:xdigit:]]+n?\>"
-color lagoon "\<0[bB][01]+n?\>"
-color lagoon "\<0[oO][0-7]+n?\>"
+color #8cf "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?n?\>"
+color #8cf "\<0[xX][[:xdigit:]]+n?\>"
+color #8cf "\<0[bB][01]+n?\>"
+color #8cf "\<0[oO][0-7]+n?\>"
 
 # TS primitive types
-color orange "\<(any|unknown|never|void|boolean|number|string|symbol|bigint|object)\>"
-# Built-in objects and utility types
-color orange "\<(Array|Boolean|Number|Object|String|Symbol|Function|Promise|Map|Set|WeakMap|WeakSet|Date|RegExp|Error|TypeError|RangeError|SyntaxError|JSON|Math|console|process|Buffer|BigInt|Partial|Required|Readonly|Pick|Omit|Record|Exclude|Extract|NonNullable|ReturnType|Parameters|Awaited)\>"
+color #fa6 "\<(any|unknown|never|boolean|number|string|symbol|bigint|object)\>"
+# Built-in classes and utility types — GH Dark orange
+color #fa6 "\<(Array|Boolean|Number|Object|String|Symbol|Function|Promise|Map|Set|WeakMap|WeakSet|Date|RegExp|Error|TypeError|RangeError|SyntaxError|JSON|Math|BigInt|Infinity|NaN|Partial|Required|Readonly|Pick|Omit|Record|Exclude|Extract|NonNullable|ReturnType|Parameters|Awaited)\>"
 
-# Literals and special values
-color lagoon "\<(true|false|null|undefined|NaN|Infinity|this|super|globalThis|arguments)\>"
+# Built-in support variables — GH Dark support.variable (orange)
+color #fa6 "\<(console|process|window|document|globalThis|Buffer)\>"
+
+# Built-in support functions — GH Dark support.function (purple, #D2A8FF)
+color #dbf "\<(require|setTimeout|setInterval|clearTimeout|clearInterval|setImmediate|clearImmediate|queueMicrotask|structuredClone|parseInt|parseFloat|isNaN|isFinite|eval|encodeURI|decodeURI|encodeURIComponent|decodeURIComponent|fetch|alert|confirm|prompt)\>"
+
+# Literals (primitive constants)
+color #8cf "\<(true|false|null|undefined)\>"
 
 # Declaration & modifiers (includes TS-specific)
-color peach "\<(var|let|const|function|class|extends|implements|interface|type|enum|namespace|module|static|public|private|protected|readonly|abstract|override|declare|async|await|keyof|infer|satisfies|is|asserts)\>"
+color #f88 "\<(var|let|const|function|class|extends|implements|interface|type|enum|namespace|module|static|public|private|protected|readonly|abstract|override|declare|async|await|keyof|infer|satisfies|is|asserts)\>"
 # Flow control
-color peach "\<(if|else|switch|case|default|for|while|do|break|continue|return|yield|throw|try|catch|finally)\>"
-# Operator-keywords
-color peach "\<(new|delete|typeof|instanceof|in|of)\>"
+color #f88 "\<(if|else|switch|case|default|for|while|do|break|continue|return|yield|throw|try|catch|finally)\>"
+# Operator and language keywords
+color #f88 "\<(new|delete|typeof|instanceof|in|of|void|this|super|arguments)\>"
 # Modules
-color peach "\<(import|export|from|as|require)\>"
+color #f88 "\<(import|export|from|as)\>"
 
 # Strings
-color sky ""([^"\]|\\.)*"|'([^'\]|\\.)*'|`([^`\]|\\.)*`"
+color #adf ""([^"\]|\\.)*"|'([^'\]|\\.)*'|`([^`\]|\\.)*`"
 
 # Comments
-color grey "(^|[[:blank:]])//.*"
-color grey start="/\*" end="\*/"
+color #888 "(^|[[:blank:]])//.*"
+color #888 start="/\*" end="\*/"
+
+# Trailing whitespace
+color ,#122 "[[:space:]]+$"
