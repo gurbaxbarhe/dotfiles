@@ -1,29 +1,29 @@
 ## GitHub Dark — YAML
 
-syntax "yaml" "\.ya?ml$"
+syntax "yaml-gh" "\.ya?ml$"
 comment "#"
 
 # Numbers
-color "#8cf" "([[:blank:]]|^)-?([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?([[:blank:]]|$)"
+color lagoon "([[:blank:]]|^)-?([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?([[:blank:]]|$)"
 
 # Literals / booleans / null
-color "#8cf" "([[:blank:]]|^)(true|True|TRUE|false|False|FALSE|null|Null|NULL|~|yes|Yes|YES|no|No|NO|on|On|ON|off|Off|OFF)([[:blank:]]|$)"
+color lagoon "([[:blank:]]|^)(true|True|TRUE|false|False|FALSE|null|Null|NULL|~|yes|Yes|YES|no|No|NO|on|On|ON|off|Off|OFF)([[:blank:]]|$)"
 
 # Anchors, aliases, tags
-color "#fa5" "[&*][a-zA-Z0-9_-]+"
-color "#fa5" "![a-zA-Z0-9_/-]+"
+color orange "[&*][a-zA-Z0-9_-]+"
+color orange "![a-zA-Z0-9_/-]+"
 
 # Document markers
-color "#f87" "^(---|\.\.\.)[[:blank:]]*$"
+color peach "^(---|\.\.\.)[[:blank:]]*$"
 
 # List markers
-color "#f87" "^[[:blank:]]*-[[:blank:]]"
+color peach "^[[:blank:]]*-[[:blank:]]"
 
 # Keys (word followed by :)
-color "#8cf" "^[[:blank:]]*-?[[:blank:]]*[^:[:blank:]][^:]*:($|[[:blank:]])"
+color lagoon "^[[:blank:]]*-?[[:blank:]]*[^:[:blank:]][^:]*:($|[[:blank:]])"
 
 # Strings
-color "#adf" ""([^"\]|\\.)*"|'[^']*'"
+color sky ""([^"\]|\\.)*"|'[^']*'"
 
 # Comments
-color "#99a" "(^|[[:blank:]])#.*"
+color grey "(^|[[:blank:]])#.*"

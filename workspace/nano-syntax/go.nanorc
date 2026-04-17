@@ -1,33 +1,33 @@
 ## GitHub Dark — Go
 
-syntax "go" "\.go$"
+syntax "go-gh" "\.go$"
 comment "//"
 
 # Identifiers / function names (user override)
-color "#3d5" "\<[a-zA-Z_][a-zA-Z0-9_]*\>"
+color mint "\<[a-zA-Z_][a-zA-Z0-9_]*\>"
 
 # Numbers
-color "#8cf" "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?i?\>"
-color "#8cf" "\<0[xX][[:xdigit:]]+\>"
-color "#8cf" "\<0[bB][01]+\>"
-color "#8cf" "\<0[oO]?[0-7]+\>"
+color lagoon "\<([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?i?\>"
+color lagoon "\<0[xX][[:xdigit:]]+\>"
+color lagoon "\<0[bB][01]+\>"
+color lagoon "\<0[oO]?[0-7]+\>"
 
 # Built-in types
-color "#fa5" "\<(bool|byte|complex64|complex128|error|float32|float64|int|int8|int16|int32|int64|rune|string|uint|uint8|uint16|uint32|uint64|uintptr|any|comparable)\>"
+color orange "\<(bool|byte|complex64|complex128|error|float32|float64|int|int8|int16|int32|int64|rune|string|uint|uint8|uint16|uint32|uint64|uintptr|any|comparable)\>"
 
 # Built-in functions
-color "#fa5" "\<(append|cap|close|complex|copy|delete|imag|len|make|new|panic|print|println|real|recover|min|max|clear)\>"
+color orange "\<(append|cap|close|complex|copy|delete|imag|len|make|new|panic|print|println|real|recover|min|max|clear)\>"
 
 # Literals and special values
-color "#8cf" "\<(true|false|nil|iota)\>"
+color lagoon "\<(true|false|nil|iota)\>"
 
 # Keywords
-color "#f87" "\<(break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go|goto|if|import|interface|map|package|range|return|select|struct|switch|type|var)\>"
+color peach "\<(break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go|goto|if|import|interface|map|package|range|return|select|struct|switch|type|var)\>"
 
 # Strings
-color "#adf" ""([^"\]|\\.)*"|'([^'\]|\\.)'"
-color "#adf" start="`" end="`"
+color sky ""([^"\]|\\.)*"|'([^'\]|\\.)'"
+color sky start="`" end="`"
 
 # Comments
-color "#99a" "(^|[[:blank:]])//.*"
-color "#99a" start="/\*" end="\*/"
+color grey "(^|[[:blank:]])//.*"
+color grey start="/\*" end="\*/"
