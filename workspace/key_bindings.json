@@ -1,3 +1,4 @@
+// Place your key bindings in this file to override the defaults
 [
     {
         "key": "alt+cmd+b",
@@ -132,10 +133,6 @@
         "command": "-workbench.action.replaceInFiles"
     },
     {
-        "key": "shift+cmd+h",
-        "command": "composer.showComposerHistory"
-    },
-    {
         "key": "alt+cmd+'",
         "command": "-composer.showComposerHistory"
     },
@@ -175,7 +172,34 @@
         "when": "glassActiveAgentIsCloud && glassNoModalOpen && isGlassEmptyWorkspace && !terminalFocusInAny"
     },
     {
+        "key": "alt+cmd+e",
+        "command": "-workbench.action.maximizeChatSize"
+    },
+    {
+        "key": "alt+cmd+e",
+        "command": "workbench.files.action.showActiveFileInExplorer"
+    },
+    {
         "key": "shift+cmd+c",
-        "command": "git.openChange"
+        "command": "gitlens.diffWithPrevious:key",
+        "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && resource in 'gitlens:tabs:tracked'"
+    },
+    {
+        "key": "alt+,",
+        "command": "-gitlens.diffWithPrevious:key",
+        "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && resource in 'gitlens:tabs:tracked'"
+    },
+    {
+        "key": "alt+cmd+g ,",
+        "command": "-gitlens.diffWithPrevious:key",
+        "when": "editorTextFocus && config.gitlens.keymap == 'chorded' && resource in 'gitlens:tabs:tracked'"
+    },
+    {
+        "key": "shift+cmd+c",
+        "command": "gitlens.diffWithPrevious"
+    },
+    {
+        "key": "shift+cmd+h",
+        "command": "claude-vscode.sidebar.open"
     }
 ]

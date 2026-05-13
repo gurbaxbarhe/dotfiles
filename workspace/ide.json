@@ -58,7 +58,7 @@
     "workbench.startupEditor": "none",
     "security.workspace.trust.untrustedFiles": "open",
     "git.autofetch": true,
-    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.ignoreTrimWhitespace": true,
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "git.enableSmartCommit": true,
     "githubPullRequests.pullBranch": "never",
@@ -91,5 +91,36 @@
     "python.createEnvironment.trigger": "off",
     "workbench.editor.enablePreview": false,
     "terminal.integrated.revealOnOutput": "never",
-    "terminal.integrated.hideOnStartup": "always"
+    "terminal.integrated.hideOnStartup": "always",
+    "git.confirmSync": false,
+    "window.confirmSaveUntitledWorkspace": false,
+    "git.openRepositoryInParentFolders": "never",
+    "window.autoDetectColorScheme": false,
+    "claudeCode.preferredLocation": "sidebar",
+    "githubPullRequests.queries": [
+        {
+            "label": "Copilot on My Behalf",
+            "query": "repo:${owner}/${repository} is:open author:copilot involves:${user}"
+        },
+        {
+            "label": "Local Pull Request Branches",
+            "query": "default"
+        },
+        {
+            "label": "Waiting For My Review",
+            "query": "repo:${owner}/${repository} is:open review-requested:${user}"
+        },
+        {
+            "label": "Open By Me",
+            "query": "repo:${owner}/${repository} is:open author:${user}"
+        },
+        {
+            "label": "Closed By Me",
+            "query": "repo:${owner}/${repository} is:pr is:closed author:${user} sort:updated-desc"
+        },
+        {
+            "label": "All Open",
+            "query": "default"
+        }
+    ]
 }
