@@ -41,13 +41,8 @@
             {
                 "scope": "variable",
                 "settings": {
-                    "foreground": "#2BD058"
-                }
-            },
-            {
-                "scope": "function",
-                "settings": {
-                    "foreground": "#2BD058"
+                    "foreground": "#e1e4e8"
+                    //"foreground": "#2BD058" // Green
                 }
             }
         ]
@@ -68,6 +63,10 @@
     "workbench.editorAssociations": {
         "*.copilotmd": "vscode.markdown.preview.editor",
     },
+    "files.associations": {
+        "*.env": "shellscript",
+        ".env*": "shellscript"
+    },
     "security.promptForLocalFileProtocolHandling": false,
     "go.toolsManagement.autoUpdate": true,
     "cursor-retrieval.canAttemptGithubLogin": false,
@@ -87,7 +86,6 @@
     },
     "githubPullRequests.createOnPublishBranch": "never",
     "editor.insertSpaces": false,
-    "window.zoomLevel": 0.1,
     "python.createEnvironment.trigger": "off",
     "workbench.editor.enablePreview": false,
     "terminal.integrated.revealOnOutput": "never",
@@ -122,5 +120,11 @@
             "label": "All Open",
             "query": "default"
         }
-    ]
+    ],
+    "comments.thread.confirmOnCollapse": "never",
+    "editor.fontSize": 13,
+    "terminal.integrated.fontSize": 13,
+    "editor.minimap.sectionHeaderFontSize": 19,
+    "debug.console.fontSize": 13,
+    "markdown.preview.fontSize": 13
 }
