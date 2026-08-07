@@ -12,7 +12,7 @@
     "Green Component" : 1
   },
   "Foreground Color (Dark)" : {
-    "Red Component" : 0.99999994039535522,
+    "Red Component" : 1,
     "Color Space" : "P3",
     "Blue Component" : 1,
     "Alpha Component" : 1,
@@ -44,11 +44,11 @@
   "Disable Window Resizing" : false,
   "BM Growl" : true,
   "Background Color (Dark)" : {
-    "Red Component" : 0.14448651671409607,
+    "Red Component" : 0.14117647058823529,
     "Color Space" : "P3",
-    "Blue Component" : 0.18095040321350098,
+    "Blue Component" : 0.1803921568627451,
     "Alpha Component" : 1,
-    "Green Component" : 0.16184845566749573
+    "Green Component" : 0.16078431372549021
   },
   "Guid" : "6F77AB7D-B603-497A-969E-F249F8E333C7",
   "Cursor Color (Dark)" : {
@@ -164,9 +164,11 @@
   },
   "Screen" : -1,
   "Cursor Text Color (Dark)" : {
-    "Green Component" : 1,
+    "Red Component" : 1,
+    "Color Space" : "P3",
     "Blue Component" : 1,
-    "Red Component" : 1
+    "Alpha Component" : 1,
+    "Green Component" : 1
   },
   "Description" : "Default",
   "Unlimited Scrollback" : false,
