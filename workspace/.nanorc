@@ -44,4 +44,4 @@ set tabsize 4
 # for languages they cover.
 include "/opt/homebrew/share/nano/*.nanorc"
 include "/opt/homebrew/share/nano/extra/*.nanorc"
-include "/Users/gurbaxbarhe/Library/CloudStorage/OneDrive-Personal/Projects/dotfiles/workspace/nano-syntax/*.nanorc"
+include "~/.nano-syntax/*.nanorc"

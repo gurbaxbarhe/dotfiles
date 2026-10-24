@@ -1,0 +1,9 @@
+{
+  "name": "GitHub Dark+",
+  "base": "dark",
+  "overrides": {
+    "userMessageBackground": "#3b4450",
+    "userMessageBackgroundHover": "#475262",
+    "briefLabelYou": "#73ceff"
+  }
+}

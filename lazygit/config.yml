@@ -1,0 +1,4 @@
+# Render lazygit's diff panel with delta (same look as `git diff` in the shell).
+git:
+  diffRenderers:
+    - command: delta --dark --paging=never

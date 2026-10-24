@@ -112,7 +112,11 @@ alias venv="source venv/bin/activate"
 alias fe="cd scriptrunner-frontend"
 alias be="cd scriptrunner-backend"
 alias fleet="cd script-runner-fleet"
+alias dispatcher="cd script-runner-dispatcher"
 alias design="cd script-runner-design-system"
+
+# Shortcuts
+alias cr="claude --resume"
 
 # Git aliases (override oh-my-zsh git plugin defaults).
 alias s='git status -sb'
@@ -135,7 +139,7 @@ alias gch='git cherry-pick'
 alias gcm='git commit -v --amend'
 alias gcom='git commit -a -m'
 
-alias gco='git checkout'
+alias gc='git checkout'
 
 alias gd='git diff -M'
 alias gd.='git diff -M --color-words="."'
