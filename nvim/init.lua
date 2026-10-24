@@ -1,0 +1,404 @@
+-- Leader must be set before plugins load.
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable",
+    "https://github.com/folke/lazy.nvim.git", lazypath })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  {
+    "projekt0n/github-nvim-theme",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- The plugin's github_dark drifted to #30363d; these overrides restore the
+      -- exact palette from Cursor's "GitHub Dark" (vscode-github-theme dark.json).
+      require("github-theme").setup({
+        options = { styles = { comments = "italic", keywords = "NONE" } },
+        specs = {
+          github_dark = {
+            bg0 = "#1f2428", -- floats and popups
+            bg1 = "#24292e", -- editor background
+            bg2 = "#2b3036", -- cursorline
+            bg3 = "#2f363d", -- indent guides, folds
+            bg4 = "#444d56",
+            fg0 = "#959da5",
+            fg1 = "#e1e4e8", -- editor foreground
+            fg2 = "#959da5", -- statusline
+            fg3 = "#444d56", -- line numbers
+            sel0 = "#284566", -- visual selection
+            sel1 = "#2b3036", -- popup selection
+            sel2 = "#5e5632", -- search
+            syntax = {
+              comment  = "#6a737d",
+              const    = "#79b8ff",
+              number   = "#79b8ff",
+              field    = "#e1e4e8",
+              operator = "#f97583",
+              builtin0 = "#79b8ff",
+              builtin2 = "#79b8ff",
+              func     = "#b392f0",
+              keyword  = "#f97583",
+              conditional = "#f97583",
+              statement   = "#f97583",
+              preproc     = "#f97583",
+              builtin1    = "#f97583",
+              string   = "#9ecbff",
+              regex    = "#dbedff",
+              type     = "#ffab70",
+              variable = "#e1e4e8",
+              param    = "#ffab70",
+              ident    = "#e1e4e8",
+              bracket  = "#e1e4e8",
+              tag      = "#85e89d",
+              dep      = "#fdaeb7",
+            },
+            diag = { error = "#f97583", warn = "#ffea7f", info = "#79b8ff", hint = "#959da5" },
+          },
+        },
+        -- Per-group overrides. Put the cursor on a token, run :Inspect to get its
+        -- @group name, then pin it here. GitHub Dark reference palette:
+        --   #b392f0 purple   #ffab70 orange   #79b8ff blue    #9ecbff light blue
+        --   #f97583 red      #85e89d green    #e1e4e8 white   #6a737d grey
+        groups = {
+          github_dark = {
+            ["@variable.parameter"] = { fg = "#ffab70" },
+            ["@variable.member"] = { fg = "#e1e4e8" },
+
+            -- LSP semantic tokens. Same mechanism Cursor uses, so these are the
+            -- colors that actually decide the final result. Each mapping is
+            -- VS Code's default token->scope rule resolved against dark.json.
+            ["@lsp.type.namespace"]     = { fg = "#b392f0" },
+            ["@lsp.type.type"]          = { fg = "#b392f0" },
+            ["@lsp.type.struct"]        = { fg = "#b392f0" },
+            ["@lsp.type.class"]         = { fg = "#b392f0" },
+            ["@lsp.type.interface"]     = { fg = "#b392f0" },
+            ["@lsp.type.enum"]          = { fg = "#b392f0" },
+            ["@lsp.type.typeParameter"] = { fg = "#b392f0" },
+            ["@lsp.type.function"]      = { fg = "#b392f0" },
+            ["@lsp.type.method"]        = { fg = "#b392f0" },
+            -- ts_ls emits the deprecated "member" alias; superType is "method".
+            ["@lsp.type.member"]        = { fg = "#b392f0" },
+            ["@lsp.type.macro"]         = { fg = "#b392f0" },
+            ["@lsp.type.decorator"]     = { fg = "#b392f0" },
+            ["@lsp.type.variable"]      = { fg = "#e1e4e8" },
+            ["@lsp.type.property"]      = { fg = "#e1e4e8" },
+            ["@lsp.type.event"]         = { fg = "#e1e4e8" },
+            ["@lsp.type.parameter"]     = { fg = "#ffab70" },
+            ["@lsp.type.enumMember"]    = { fg = "#79b8ff" },
+            ["@lsp.type.number"]        = { fg = "#79b8ff" },
+            ["@lsp.type.regexp"]        = { fg = "#79b8ff" },
+            ["@lsp.type.string"]        = { fg = "#9ecbff" },
+            ["@lsp.type.comment"]       = { fg = "#6a737d" },
+            ["@lsp.type.keyword"]       = { fg = "#f97583" },
+            ["@lsp.type.operator"]      = { fg = "#f97583" },
+            -- readonly / defaultLibrary modifiers all resolve to blue
+            ["@lsp.typemod.variable.readonly"]         = { fg = "#79b8ff" },
+            ["@lsp.typemod.property.readonly"]         = { fg = "#79b8ff" },
+            ["@lsp.typemod.variable.defaultLibrary"]   = { fg = "#79b8ff" },
+            ["@lsp.typemod.property.defaultLibrary"]   = { fg = "#79b8ff" },
+            -- Callables stay purple even when they come from the default library:
+            -- verified against Cursor (.map/.filter/console.error render purple,
+            -- while Map/Set/console themselves render blue).
+            ["@lsp.typemod.function.defaultLibrary"]   = { fg = "#b392f0" },
+            ["@lsp.typemod.method.defaultLibrary"]     = { fg = "#b392f0" },
+            ["@lsp.typemod.member.defaultLibrary"]     = { fg = "#b392f0" },
+            ["@lsp.typemod.class.defaultLibrary"]      = { fg = "#79b8ff" },
+            ["@lsp.typemod.type.defaultLibrary"]       = { fg = "#79b8ff" },
+            ["@lsp.typemod.interface.defaultLibrary"]  = { fg = "#79b8ff" },
+
+            -- Ground truth from running VS Code's tokenizer (vscode-textmate +
+            -- Cursor's JS grammar) against dark.json:
+            ["@string.escape"]                  = { fg = "#79b8ff" }, -- \n in strings
+            ["@string.regexp.delimiter"]        = { fg = "#9ecbff" }, -- the / /
+            ["@character.special.javascript"]   = { fg = "#f97583" }, -- regex flags g,i
+            ["@character.special.typescript"]   = { fg = "#f97583" },
+            ["@character.special.tsx"]          = { fg = "#f97583" },
+            ["@operator.regex"]                 = { fg = "#f97583" }, -- + * ? |
+            ["@punctuation.delimiter.regex"]    = { fg = "#f97583" }, -- ^ $
+            ["@punctuation.bracket.regex"]      = { fg = "#dbedff" }, -- group ( )
+            ["@constant.regex"]                 = { fg = "#79b8ff" }, -- chars in [..]
+            ["@string.escape.regex"]            = { fg = "#79b8ff" }, -- \d \s \b
+            ["@constant.character.escape.regex"] = { fg = "#85e89d" }, -- \[ \] \.
+            ["@number.regex"]                   = { fg = "#f97583" }, -- {2,3}
+            ["@variable.builtin.regex"]         = { fg = "#79b8ff" }, -- .
+
+            -- Destructuring source keys: `const { a: b }` renders `a` orange.
+            ["@ghkey"] = { fg = "#ffab70" },
+
+            -- try/catch/throw/finally are plain keywords in GitHub Dark
+            ["@keyword.exception"] = { fg = "#f97583" },
+
+            -- JSDoc: VS Code renders @tag red, the whole {type} purple, names white
+            ["@type.jsdoc"]                = { fg = "#b392f0" },
+            ["@punctuation.bracket.jsdoc"] = { fg = "#b392f0" },
+            ["@punctuation.delimiter.jsdoc"] = { fg = "#e1e4e8" },
+            ["@variable.jsdoc"]            = { fg = "#e1e4e8" },
+            ["@variable.parameter.jsdoc"]  = { fg = "#e1e4e8" },
+            ["@property.jsdoc"]            = { fg = "#e1e4e8" },
+            ["@function.jsdoc"]            = { fg = "#e1e4e8" },
+            ["@keyword.jsdoc"]             = { fg = "#f97583" },
+
+            -- Bracket-pair colors (editorBracketHighlight.foreground1-6)
+            RainbowGH1 = { fg = "#79b8ff" },
+            RainbowGH2 = { fg = "#ffab70" },
+            RainbowGH3 = { fg = "#b392f0" },
+
+            WinBar   = { fg = "#1f2428", bg = "#477fbf", bold = true },
+            WinBarNC = { fg = "#e1e4e8", bg = "#1f2428" },
+          },
+        },
+      })
+      vim.cmd("colorscheme github_dark")
+    end,
+  },
+
+  -- Treesitter: real syntax parsing. Without it Neovim falls back to regex
+  -- highlighting, which leaves most tokens uncolored.
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter").setup()
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
+    end,
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      -- Fall back to the global typescript when a repo has no local one.
+      vim.lsp.config("ts_ls", {
+        init_options = {
+          hostInfo = "neovim",
+          tsserver = { path = vim.fn.expand("~/.nvm/versions/node/v22.22.3/lib/node_modules/typescript/lib/tsserver.js") },
+        },
+      })
+      vim.lsp.enable({ "ts_ls" })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(ev)
+          local o = function(d) return { buffer = ev.buf, desc = d } end
+          local tb = require("telescope.builtin")
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition,      o("Go to definition"))
+          vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, o("Go to type definition"))
+          vim.keymap.set("n", "gr", tb.lsp_references,           o("Find references"))
+          vim.keymap.set("n", "gi", tb.lsp_implementations,      o("Go to implementation"))
+          vim.keymap.set("n", "K",  vim.lsp.buf.hover,           o("Hover docs"))
+          vim.keymap.set("n", "<leader>s", tb.lsp_document_symbols, o("Document symbols"))
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,  o("Rename symbol"))
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o("Code action"))
+        end,
+      })
+    end,
+  },
+
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    config = function()
+      vim.g.rainbow_delimiters = {
+        highlight = { "RainbowGH1", "RainbowGH2", "RainbowGH3" },
+        -- VS Code does not colorize brackets inside regexes or ${...}.
+        blacklist = { "regex" },
+        query = { javascript = "rainbow-gh", typescript = "rainbow-gh", tsx = "rainbow-gh" },
+      }
+    end,
+  },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      -- Native fzf sorter: same pickers, faster and better-ranked matches.
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      -- live_grep that accepts rg flags: `foo -g '*.ts'`, `"exact phrase" -t py`
+      "nvim-telescope/telescope-live-grep-args.nvim",
+    },
+    config = function()
+      local telescope = require("telescope")
+      telescope.setup({
+        defaults = {
+          file_ignore_patterns = { "%.git/", "node_modules/" },
+          -- <C-q> (built in) sends results to the quickfix list; walk them with
+          -- :cnext/:cprev or edit all of them with :cdo s/foo/bar/ | update
+        },
+        pickers = { find_files = { hidden = true } },
+      })
+      telescope.load_extension("fzf")
+      telescope.load_extension("live_grep_args")
+
+      local t = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>f", t.find_files, { desc = "Find files" })
+      vim.keymap.set("n", "<leader>g", t.live_grep,  { desc = "Grep in files" })
+      vim.keymap.set("n", "<leader>G", telescope.extensions.live_grep_args.live_grep_args, { desc = "Grep with rg flags" })
+      vim.keymap.set("n", "<leader>*", t.grep_string, { desc = "Grep word under cursor" })
+      vim.keymap.set("n", "<leader>/", t.current_buffer_fuzzy_find, { desc = "Search this file" })
+      vim.keymap.set("n", "<leader>b", t.buffers,    { desc = "Open buffers" })
+      vim.keymap.set("n", "<leader>h", t.help_tags,  { desc = "Help" })
+      vim.keymap.set("n", "<leader>r", t.oldfiles,   { desc = "Recent files" })
+      -- Changed files: uncommitted (dc), or everything on this branch, as in the PR (dC).
+      vim.keymap.set("n", "<leader>dc", t.git_status, { desc = "Changed files (uncommitted)" })
+      vim.keymap.set("n", "<leader>dC", function()
+        t.git_files({ git_command = { "git", "diff", "--name-only", "--relative", "origin/HEAD...HEAD" } })
+      end, { desc = "Changed files on branch (PR)" })
+    end,
+  },
+
+  -- Git: change markers in the sign column, hunk preview/stage/blame.
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      local gs = require("gitsigns")
+      gs.setup()
+      vim.keymap.set("n", "]h", function() gs.nav_hunk("next") end, { desc = "Next git hunk" })
+      vim.keymap.set("n", "[h", function() gs.nav_hunk("prev") end, { desc = "Prev git hunk" })
+      vim.keymap.set("n", "<leader>dp", gs.preview_hunk, { desc = "Preview hunk" })
+      vim.keymap.set("n", "<leader>ds", gs.stage_hunk,   { desc = "Stage hunk" })
+      vim.keymap.set("n", "<leader>dr", gs.reset_hunk,   { desc = "Reset hunk" })
+      vim.keymap.set("n", "<leader>db", gs.blame_line,   { desc = "Blame line" })
+    end,
+  },
+
+  -- Side-by-side diffs with a file panel. <leader>dm is "the PR view": every
+  -- file changed on this branch since it left the remote's default branch.
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    keys = {
+      { "<leader>dd", "<cmd>DiffviewOpen<cr>",                     desc = "Diff working tree" },
+      { "<leader>dm", "<cmd>DiffviewOpen origin/HEAD...HEAD<cr>",  desc = "Diff branch vs default (PR)" },
+      { "<leader>dh", "<cmd>DiffviewFileHistory %<cr>",            desc = "File history" },
+      { "<leader>dq", "<cmd>DiffviewClose<cr>",                    desc = "Close diff" },
+    },
+  },
+
+  -- GitHub PRs/issues inside nvim via gh: list, review, comment.
+  {
+    "pwntester/octo.nvim",
+    cmd = "Octo",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    opts = {},
+    keys = {
+      { "<leader>o", "<cmd>Octo pr list<cr>", desc = "GitHub PRs" },
+    },
+  },
+
+  -- AI ghost-text completion. Both load on demand; lua/ai.lua picks which one
+  -- runs (<leader>ai on/off, <leader>ap switch provider).
+  {
+    "zbirenbaum/copilot.lua",
+    lazy = true,
+    opts = {
+      panel = { enabled = false },
+      -- <Tab> is owned by lua/ai.lua so the two providers don't fight over it.
+      suggestion = { auto_trigger = true, keymap = { accept = false } },
+    },
+  },
+  {
+    "Exafunction/windsurf.nvim",
+    lazy = true,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("codeium").setup({
+        enable_cmp_source = false,
+        enable_chat = false,
+        virtual_text = { enabled = true, map_keys = false },
+      })
+    end,
+  },
+
+  -- Lets the Claude Code session in the next tmux pane see this nvim: run /ide
+  -- in Claude to connect. Its edits open here as diffs to accept/deny.
+  {
+    "coder/claudecode.nvim",
+    lazy = false,
+    opts = { terminal = { provider = "none" } },
+    keys = {
+      { "<leader>as", "<cmd>ClaudeCodeSend<cr>",       mode = "v", desc = "Send selection to Claude" },
+      { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",      desc = "Add buffer to Claude" },
+      { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept Claude diff" },
+      { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny Claude diff" },
+    },
+  },
+})
+
+require("ai").setup()
+
+-- Appearance
+vim.opt.termguicolors = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes"
+vim.opt.cursorline = true
+vim.opt.scrolloff = 8
+
+-- Editing
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.smartindent = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.mouse = "a"
+vim.opt.undofile = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- Claude edits files under open buffers; reload them instead of clobbering on :w.
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "TermClose", "TermLeave" }, {
+  command = "if mode() != 'c' | checktime | endif",
+})
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  callback = function()
+    vim.notify("File changed on disk — buffer reloaded", vim.log.levels.WARN)
+  end,
+})
+
+-- Filename bar at the top of each window instead of the bottom statusline.
+local MODES = {
+  n = "NORMAL", i = "INSERT", v = "VISUAL", V = "V-LINE", ["\22"] = "V-BLOCK",
+  c = "COMMAND", R = "REPLACE", s = "SELECT", t = "TERMINAL",
+}
+function _G.winbar()
+  local m = vim.api.nvim_get_mode().mode
+  local ai = require("ai").status()
+  return string.format(" %s  %%f %%m%%=%s  %%l:%%c  %%P ", MODES[m] or m:upper(), ai)
+end
+vim.o.winbar = "%{%v:lua.winbar()%}"
+vim.o.laststatus = 0 -- no bottom statusline; winbar replaces it
+vim.o.ruler = false  -- and no line/col readout in the command line
+
+-- Escape terminal mode with <Esc><Esc>
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
+
+-- Tell tmux which folder this pane is "in" (the current file's), so tmux
+-- splits from an nvim pane open there instead of where nvim was launched.
+if vim.env.TMUX then
+  local function set_tmux_dir(dir)
+    vim.system({ "tmux", "set-option", "-p", "-t", vim.env.TMUX_PANE, "@nvim_dir", dir })
+  end
+  vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged" }, {
+    callback = function()
+      local dir = vim.fn.expand("%:p:h")
+      if vim.bo.buftype ~= "" or vim.fn.isdirectory(dir) == 0 then dir = vim.fn.getcwd() end
+      set_tmux_dir(dir)
+    end,
+  })
+  vim.api.nvim_create_autocmd("VimLeavePre", {
+    callback = function()
+      vim.system({ "tmux", "set-option", "-p", "-u", "-t", vim.env.TMUX_PANE, "@nvim_dir" }):wait()
+    end,
+  })
+end
