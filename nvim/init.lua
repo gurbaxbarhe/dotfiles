@@ -246,10 +246,13 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>b", t.buffers,    { desc = "Open buffers" })
       vim.keymap.set("n", "<leader>h", t.help_tags,  { desc = "Help" })
       vim.keymap.set("n", "<leader>r", t.oldfiles,   { desc = "Recent files" })
-      -- Changed files: uncommitted (dc), or everything on this branch, as in the PR (dC).
-      vim.keymap.set("n", "<leader>dc", t.git_status, { desc = "Changed files (uncommitted)" })
-      vim.keymap.set("n", "<leader>dC", function()
-        t.git_files({ git_command = { "git", "diff", "--name-only", "--relative", "origin/HEAD...HEAD" } })
+      -- Files changed on this branch since it left the default branch, committed or not.
+      vim.keymap.set("n", "<leader>dc", function()
+        local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
+        if vim.v.shell_error ~= 0 then
+          return vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
+        end
+        t.git_files({ git_command = { "git", "diff", "--name-only", "--relative", base } })
       end, { desc = "Changed files on branch (PR)" })
     end,
   },
@@ -266,6 +269,25 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>ds", gs.stage_hunk,   { desc = "Stage hunk" })
       vim.keymap.set("n", "<leader>dr", gs.reset_hunk,   { desc = "Reset hunk" })
       vim.keymap.set("n", "<leader>db", gs.blame_line,   { desc = "Blame line" })
+      -- Unified PR diff inside the file: compare against where the branch left
+      -- the default branch, with deleted lines shown inline. Toggle off to go back.
+      local unified = false
+      vim.keymap.set("n", "<leader>du", function()
+        unified = not unified
+        if unified then
+          local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
+          if vim.v.shell_error ~= 0 then
+            unified = false
+            return vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
+          end
+          gs.change_base(base, true)
+        else
+          gs.reset_base(true)
+        end
+        gs.toggle_linehl(unified)
+        gs.toggle_word_diff(unified)
+        gs.toggle_deleted(unified)
+      end, { desc = "Toggle unified PR diff" })
     end,
   },
 
@@ -274,6 +296,7 @@ require("lazy").setup({
   {
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       { "<leader>dd", "<cmd>DiffviewOpen<cr>",                     desc = "Diff working tree" },
       { "<leader>dm", "<cmd>DiffviewOpen origin/HEAD...HEAD<cr>",  desc = "Diff branch vs default (PR)" },
@@ -382,6 +405,22 @@ vim.o.ruler = false  -- and no line/col readout in the command line
 
 -- Escape terminal mode with <Esc><Esc>
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
+
+-- Mac-style selection: Shift+arrows select by character, Option+Shift+Left/Right
+-- by word, from normal or insert mode. iTerm keeps Cmd+C, so every selection is
+-- copied as it grows (mouse ones on release) and Cmd+V pastes it anywhere. A plain
+-- arrow ends the selection.
+vim.opt.keymodel = "stopsel"
+vim.keymap.set("x", "<LeftRelease>", "<LeftRelease>ygv")
+vim.keymap.set("x", "<2-LeftRelease>", "<2-LeftRelease>ygv")
+-- { first press (one char, like a Mac), each press after }; `^ is where insert left the cursor.
+for key, m in pairs({ ["<S-Left>"] = { "hv", "h" }, ["<S-Right>"] = { "v", "l" },
+                      ["<S-Up>"] = { "vk", "k" }, ["<S-Down>"] = { "vj", "j" },
+                      ["<M-S-Left>"] = { "vb", "b" }, ["<M-S-Right>"] = { "ve", "e" } }) do
+  vim.keymap.set("n", key, m[1] .. "ygv")
+  vim.keymap.set("i", key, "<Esc>`^" .. m[1] .. "ygv")
+  vim.keymap.set("x", key, m[2] .. "ygv")
+end
 
 -- Tell tmux which folder this pane is "in" (the current file's), so tmux
 -- splits from an nvim pane open there instead of where nvim was launched.
