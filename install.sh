@@ -61,6 +61,9 @@ link claude/themes/github-dark-plus.json "$HOME/.claude/themes/github-dark-plus.
 # Status line; enable with "statusLine": {"type": "command", "command": "~/.claude/statusline.sh"} in settings.json
 link claude/statusline.sh "$HOME/.claude/statusline.sh"
 
+# iTerm: Cmd+Option+D maximizes / restores the current split pane
+defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "Maximize Active Pane" "@~d"
+
 if [ -n "${TMUX:-}" ]; then
   tmux source-file "$HOME/.tmux.conf" && echo "tmux config reloaded"
 fi
