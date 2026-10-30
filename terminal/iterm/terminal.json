@@ -616,6 +616,7 @@
     "Green Component" : 0.26474356651306152
   },
   "Use Separate Colors for Light and Dark Mode" : true,
+  "Scrollback in Alternate Screen" : false,
   "Ansi 3 Color" : {
     "Red Component" : 0.78058648109436035,
     "Color Space" : "sRGB",
