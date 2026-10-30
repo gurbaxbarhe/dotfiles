@@ -51,6 +51,7 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `Cmd+Shift+P` | `Space+Shift+P` | Command palette: search every nvim command |
 | `Cmd+F` | `Space+F` | Search inside this file |
 | `Cmd+Shift+F` | `Space+Shift+F` | Search text across the whole project |
+| `Cmd+N` | `Space+N` | New file: asks for a name, starting in the current file's folder |
 | `Cmd+S` | `Space+S` | Save the file |
 | `Cmd+W` | `Space+W` | Close the current tab (warns if unsaved) |
 | `Cmd+Shift+[` / `]` | `Space+Shift+[` / `]` | Previous / next tab |

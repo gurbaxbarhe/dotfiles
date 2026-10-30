@@ -323,12 +323,18 @@ require("lazy").setup({
       { "<leader>{", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous tab" },
       { "<leader>}", "<cmd>BufferLineCycleNext<cr>", desc = "Next tab" },
       { "<leader>w", function()
-        local buf = vim.api.nvim_get_current_buf()
+        -- From the tree (or any non-file window), close the file you were last in.
+        local win = vim.api.nvim_get_current_win()
+        if not vim.bo.buflisted then win = vim.fn.win_getid(vim.fn.winnr("#")) end
+        local buf = win ~= 0 and vim.api.nvim_win_get_buf(win)
+        if not buf or not vim.bo[buf].buflisted then return end
         if vim.bo[buf].modified then
           return vim.notify("Unsaved changes, :w first", vim.log.levels.WARN)
         end
-        vim.cmd("bprevious")
-        if vim.api.nvim_get_current_buf() == buf then vim.cmd("enew") end
+        vim.api.nvim_win_call(win, function()
+          vim.cmd("bprevious")
+          if vim.api.nvim_get_current_buf() == buf then vim.cmd("enew") end
+        end)
         vim.cmd("bdelete " .. buf)
       end, desc = "Close tab" },
     },
@@ -510,6 +516,15 @@ end
 vim.keymap.set("n", "<leader>s", "<cmd>w<cr>", { desc = "Save" })
 vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
 vim.keymap.set("x", "<leader>/", "gc", { remap = true, desc = "Toggle comment" })
+vim.keymap.set("n", "<leader>n", function()
+  local dir = vim.bo.buflisted and vim.fn.expand("%:.:h") or ""
+  dir = (dir == "" or dir == ".") and "" or dir .. "/"
+  vim.ui.input({ prompt = "New file: ", default = dir, completion = "file" }, function(path)
+    if not path or path == "" or path:sub(-1) == "/" then return end
+    vim.fn.mkdir(vim.fn.fnamemodify(path, ":h"), "p")
+    vim.cmd.edit(vim.fn.fnameescape(path))
+  end)
+end, { desc = "New file" })
 vim.keymap.set("n", "<leader>z", "u", { desc = "Undo" })
 vim.keymap.set("n", "<leader>Z", "<C-r>", { desc = "Redo" })
 -- Option+Up/Down move the line or selection.
