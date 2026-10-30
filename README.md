@@ -8,7 +8,7 @@ Configs for my dev environment - IDE themes, terminal, tmux, nvim, and keybindin
    Because they're symlinks, editing `~/.zshrc`, `~/.config/nvim`, etc. edits the
    repo directly - just commit.
 3. iTerm: Settings > Keys > Key Bindings > Presets > Import `terminal/iterm/iterm_keys.itermkeymap`,
-   and Settings > Profiles > Other Actions > Import JSON Profiles > `terminal/iterm/colors.json`
+   and Settings > Profiles > Other Actions > Import JSON Profiles > `terminal/iterm/terminal.json`
    (Menlo 13, with Symbols Nerd Font Mono for non-ASCII so nvim's file icons render).
 4. Claude Code: `/theme` > "GitHub Dark+" (lighter prompt highlight).
 5. nvim: `:Codeium Auth` and/or `:Copilot auth` the first time you use each.
