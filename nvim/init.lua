@@ -1,6 +1,10 @@
 -- Leader must be set before plugins load.
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+-- nvim-tree replaces netrw, and bufferline needs true color at setup.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -195,9 +199,13 @@ require("lazy").setup({
           vim.keymap.set("n", "gr", tb.lsp_references,           o("Find references"))
           vim.keymap.set("n", "gi", tb.lsp_implementations,      o("Go to implementation"))
           vim.keymap.set("n", "K",  vim.lsp.buf.hover,           o("Hover docs"))
-          vim.keymap.set("n", "<leader>s", tb.lsp_document_symbols, o("Document symbols"))
+          vim.keymap.set("n", "<leader>O", tb.lsp_document_symbols, o("Document symbols"))
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,  o("Rename symbol"))
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o("Code action"))
+          vim.keymap.set("n", "<F12>",   vim.lsp.buf.definition,  o("Go to definition"))
+          vim.keymap.set("n", "<S-F12>", tb.lsp_references,       o("Find references"))
+          vim.keymap.set("n", "<F2>",    vim.lsp.buf.rename,      o("Rename symbol"))
+          vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, o("Code action"))
         end,
       })
     end,
@@ -238,12 +246,11 @@ require("lazy").setup({
       telescope.load_extension("live_grep_args")
 
       local t = require("telescope.builtin")
-      vim.keymap.set("n", "<leader>f", t.find_files, { desc = "Find files" })
+      vim.keymap.set("n", "<leader>f", t.current_buffer_fuzzy_find, { desc = "Search this file" })
+      vim.keymap.set("n", "<leader>F", t.live_grep, { desc = "Search the project" })
       vim.keymap.set("n", "<leader>g", t.live_grep,  { desc = "Grep in files" })
       vim.keymap.set("n", "<leader>G", telescope.extensions.live_grep_args.live_grep_args, { desc = "Grep with rg flags" })
       vim.keymap.set("n", "<leader>*", t.grep_string, { desc = "Grep word under cursor" })
-      vim.keymap.set("n", "<leader>/", t.current_buffer_fuzzy_find, { desc = "Search this file" })
-      vim.keymap.set("n", "<leader>b", t.buffers,    { desc = "Open buffers" })
       vim.keymap.set("n", "<leader>h", t.help_tags,  { desc = "Help" })
       vim.keymap.set("n", "<leader>r", t.oldfiles,   { desc = "Recent files" })
       -- Files changed on this branch since it left the default branch, committed or not.
@@ -254,7 +261,57 @@ require("lazy").setup({
         end
         t.git_files({ git_command = { "git", "diff", "--name-only", "--relative", base } })
       end, { desc = "Changed files on branch (PR)" })
+      vim.keymap.set("n", "<leader>p", t.find_files, { desc = "Find files" })
+      vim.keymap.set("n", "<leader>P", t.commands,   { desc = "Command palette" })
     end,
+  },
+
+  -- VS Code-style explorer sidebar. Single click opens a file or toggles a folder.
+  {
+    "nvim-tree/nvim-tree.lua",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      { "<leader>b", "<cmd>NvimTreeToggle<cr>",   desc = "Toggle file tree" },
+      { "<leader>E", "<cmd>NvimTreeFindFile<cr>", desc = "Reveal file in tree" },
+    },
+    opts = {
+      view = { width = 32, side = "right" },
+      update_focused_file = { enable = true },
+      filters = { dotfiles = false, custom = { "^.git$" } },
+      git = { ignore = false },
+      on_attach = function(bufnr)
+        local api = require("nvim-tree.api")
+        api.config.mappings.default_on_attach(bufnr)
+        vim.keymap.set("n", "<LeftRelease>", api.node.open.edit, { buffer = bufnr, desc = "Open" })
+      end,
+    },
+  },
+
+  -- Open files as tabs along the top.
+  {
+    "akinsho/bufferline.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      options = {
+        diagnostics = "nvim_lsp",
+        offsets = { { filetype = "NvimTree", text = "Explorer", separator = true } },
+      },
+    },
+    keys = {
+      { "<leader>{", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous tab" },
+      { "<leader>}", "<cmd>BufferLineCycleNext<cr>", desc = "Next tab" },
+      { "<leader>w", function()
+        local buf = vim.api.nvim_get_current_buf()
+        if vim.bo[buf].modified then
+          return vim.notify("Unsaved changes, :w first", vim.log.levels.WARN)
+        end
+        vim.cmd("bprevious")
+        if vim.api.nvim_get_current_buf() == buf then vim.cmd("enew") end
+        vim.cmd("bdelete " .. buf)
+      end, desc = "Close tab" },
+    },
   },
 
   -- Git: change markers in the sign column, hunk preview/stage/blame.
@@ -358,7 +415,6 @@ require("lazy").setup({
 require("ai").setup()
 
 -- Appearance
-vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
@@ -421,6 +477,20 @@ for key, m in pairs({ ["<S-Left>"] = { "hv", "h" }, ["<S-Right>"] = { "v", "l" }
   vim.keymap.set("i", key, "<Esc>`^" .. m[1] .. "ygv")
   vim.keymap.set("x", key, m[2] .. "ygv")
 end
+
+-- Cursor shortcuts as Space + the same key (Cmd+S -> Space s, Cmd+/ -> Space /).
+vim.keymap.set("n", "<leader>s", "<cmd>w<cr>", { desc = "Save" })
+vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
+vim.keymap.set("x", "<leader>/", "gc", { remap = true, desc = "Toggle comment" })
+vim.keymap.set("n", "<leader>z", "u", { desc = "Undo" })
+vim.keymap.set("n", "<leader>Z", "<C-r>", { desc = "Redo" })
+-- Option+Up/Down move the line or selection.
+vim.keymap.set("n", "<M-Up>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
+vim.keymap.set("n", "<M-Down>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
+vim.keymap.set("i", "<M-Up>", "<Esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
+vim.keymap.set("i", "<M-Down>", "<Esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
+vim.keymap.set("x", "<M-Up>", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
+vim.keymap.set("x", "<M-Down>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
 
 -- Tell tmux which folder this pane is "in" (the current file's), so tmux
 -- splits from an nvim pane open there instead of where nvim was launched.

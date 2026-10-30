@@ -39,18 +39,39 @@ Configs for my dev environment - IDE themes, terminal, tmux, nvim, and keybindin
 `<leader>dm` means press `Space`, `d`, `m` one after another in normal mode, within about a second.
 Keys without `<leader>` (`]h`, `gd`) are typed as written.
 
+**Cursor shortcuts:** replace `Cmd` with `Space`, keep the Shift and the key. Tap `Space` and let go, then press the rest.
+
+| Cursor | nvim | Does |
+| --- | --- | --- |
+| `Cmd+B` | `Space+B` | Show / hide the file tree. Click a file to open it, a folder to expand it |
+| `Cmd+Shift+E` | `Space+Shift+E` | Open the file tree with the current file highlighted |
+| `Cmd+P` | `Space+P` | Find a file by name |
+| `Cmd+Shift+P` | `Space+Shift+P` | Command palette: search every nvim command |
+| `Cmd+F` | `Space+F` | Search inside this file |
+| `Cmd+Shift+F` | `Space+Shift+F` | Search text across the whole project |
+| `Cmd+S` | `Space+S` | Save the file |
+| `Cmd+W` | `Space+W` | Close the current tab (warns if unsaved) |
+| `Cmd+Shift+[` / `]` | `Space+Shift+[` / `]` | Previous / next tab |
+| `Cmd+Z` / `Cmd+Shift+Z` | `Space+Z` / `Space+Shift+Z` | Undo / redo (also `u` / `Ctrl+R`) |
+| `Cmd+/` | `Space+/` | Comment / uncomment the line, or the selected lines |
+| `Cmd+.` | `Space+.` | Quick fix: code actions for the error or symbol under the cursor |
+| `Cmd+Shift+O` | `Space+Shift+O` | Jump to a function, class or variable in this file |
+| `F12` / `Shift+F12` | same | Go to definition / list everywhere it's used |
+| `F2` | same | Rename the symbol everywhere it's used |
+| `Option+↑` / `↓` | same | Move the line or selection up / down |
+
 | Keys | Does |
 | --- | --- |
-| `<leader>f` / `<leader>r` / `<leader>b` | Find files / recent files / open buffers |
+| `<leader>r` | Recent files |
 | `<leader>g` | Grep the project |
 | `<leader>G` | Grep with rg flags: `foo -g '*.ts'`, `"exact phrase" -t py` |
-| `<leader>*` / `<leader>/` | Grep word under cursor / fuzzy search this file |
+| `<leader>*` | Grep word under cursor |
 | `Shift+arrows` / `Option+Shift+←→` | Select by character / word (normal or insert); it's already copied, so `Cmd+V` pastes it. A plain arrow ends the selection |
 | Mouse drag / double-click | Select text; copied on release, so `Cmd+V` pastes it anywhere |
 | `<C-q>` in a picker | Send results to the quickfix list (`:cdo s/a/b/ \| update`) |
 | `gd` / `gD` / `gi` | Go to definition / type definition / implementation |
 | `gr` / `K` | Find references / hover docs |
-| `<leader>s` / `<leader>rn` / `<leader>ca` | Symbols in this file / rename symbol / code action |
+| `<leader>rn` / `<leader>ca` | Rename symbol / code action |
 | `<leader>dc` | Fuzzy-find files changed on this branch, committed or not |
 | `<leader>du` | Toggle the branch's changes inline in this file (deleted lines in red); again to turn off |
 | `]h` / `[h` | Next / prev changed hunk |
