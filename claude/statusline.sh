@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Claude Code status line: [model] 🗀 repo | ⎇ branch | context bar
+# Claude Code status line: [model] ❏ repo | ⎇ branch | context bar
 input=$(cat)
 model=$(jq -r '.model.display_name' <<<"$input")
 dir=$(jq -r '.workspace.current_dir' <<<"$input")
@@ -14,6 +14,6 @@ filled=$((pct / 10))
 bar=$(printf '%*s' "$filled" '' | tr ' ' '█')$(printf '%*s' $((10 - filled)) '' | tr ' ' '░')
 if [ "$pct" -ge 80 ]; then color=31; elif [ "$pct" -ge 50 ]; then color=33; else color=32; fi
 
-printf '\033[36m[%s]\033[0m 🗀 %s' "$model" "$folder"
+printf '\033[36m[%s]\033[0m ❏ %s' "$model" "$folder"
 [ -n "$branch" ] && printf ' | ⎇ %s' "$branch"
 printf ' | \033[%sm%s\033[0m %s%%\n' "$color" "$bar" "$pct"
