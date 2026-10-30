@@ -10,3 +10,4 @@ brew "git-delta"     # side-by-side git diffs
 brew "lazygit"
 brew "gh"
 brew "zsh-autosuggestions"
+cask "font-symbols-only-nerd-font"

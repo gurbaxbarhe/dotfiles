@@ -277,6 +277,14 @@ require("lazy").setup({
     },
     opts = {
       view = { width = 32, side = "right" },
+      -- Label the root from the repo down (scriptrunner-backend/src), not the full path.
+      renderer = {
+        root_folder_label = function(path)
+          local root = vim.fs.root(path, ".git")
+          if not root then return vim.fn.fnamemodify(path, ":t") end
+          return vim.fn.fnamemodify(root, ":t") .. path:sub(#root + 1)
+        end,
+      },
       update_focused_file = { enable = true },
       filters = { dotfiles = false, custom = { "^.git$" } },
       git = { ignore = false },
@@ -285,6 +293,18 @@ require("lazy").setup({
         api.config.mappings.default_on_attach(bufnr)
         vim.keymap.set("n", "<LeftRelease>", api.node.open.edit, { buffer = bufnr, desc = "Open" })
       end,
+    },
+  },
+
+  -- Pause after Space to see every shortcut that follows it.
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      spec = {
+        { "<leader>d", group = "Git / diff" },
+        { "<leader>a", group = "AI / Claude" },
+      },
     },
   },
 
@@ -455,7 +475,15 @@ function _G.winbar()
   local ai = require("ai").status()
   return string.format(" %s  %%f %%m%%=%s  %%l:%%c  %%P ", MODES[m] or m:upper(), ai)
 end
-vim.o.winbar = "%{%v:lua.winbar()%}"
+-- Set per window, not globally: an empty window-local winbar falls back to the
+-- global one, so a global value can't be hidden in the tree (bufferline labels it).
+vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "WinEnter" }, {
+  callback = function()
+    if vim.api.nvim_win_get_config(0).relative ~= "" then return end
+    local tree = vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil
+    vim.wo.winbar = tree and "" or "%{%v:lua.winbar()%}"
+  end,
+})
 vim.o.laststatus = 0 -- no bottom statusline; winbar replaces it
 vim.o.ruler = false  -- and no line/col readout in the command line
 

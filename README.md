@@ -7,7 +7,9 @@ Configs for my dev environment - IDE themes, terminal, tmux, nvim, and keybindin
    symlinks each config into place (existing files are kept as `*.backup-<date>`).
    Because they're symlinks, editing `~/.zshrc`, `~/.config/nvim`, etc. edits the
    repo directly - just commit.
-3. iTerm: Settings > Keys > Key Bindings > Presets > Import `terminal/iterm/iterm_keys.itermkeymap`.
+3. iTerm: Settings > Keys > Key Bindings > Presets > Import `terminal/iterm/iterm_keys.itermkeymap`,
+   and Settings > Profiles > Other Actions > Import JSON Profiles > `terminal/iterm/colors.json`
+   (Menlo 13, with Symbols Nerd Font Mono for non-ASCII so nvim's file icons render).
 4. Claude Code: `/theme` > "GitHub Dark+" (lighter prompt highlight).
 5. nvim: `:Codeium Auth` and/or `:Copilot auth` the first time you use each.
 
@@ -54,6 +56,7 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `Cmd+Shift+[` / `]` | `Space+Shift+[` / `]` | Previous / next tab |
 | `Cmd+Z` / `Cmd+Shift+Z` | `Space+Z` / `Space+Shift+Z` | Undo / redo (also `u` / `Ctrl+R`) |
 | `Cmd+/` | `Space+/` | Comment / uncomment the line, or the selected lines |
+| `Cmd+Shift+/` | `Space+Shift+/` | Turn AI autocomplete (Cursor Tab) on / off |
 | `Cmd+.` | `Space+.` | Quick fix: code actions for the error or symbol under the cursor |
 | `Cmd+Shift+O` | `Space+Shift+O` | Jump to a function, class or variable in this file |
 | `F12` / `Shift+F12` | same | Go to definition / list everywhere it's used |

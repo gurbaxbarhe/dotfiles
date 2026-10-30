@@ -1,5 +1,5 @@
 -- AI ghost-text completion with a switchable provider.
---   <leader>ai  turn completion on/off
+--   <leader>ai  turn completion on/off (also <leader>?, Cursor's Shift+Cmd+/)
 --   <leader>ap  switch provider (windsurf <-> copilot)
 --   <Tab>       accept the suggestion (falls back to a normal Tab)
 -- The choice survives restarts. First use of each provider needs a sign-in:
@@ -97,6 +97,7 @@ function M.setup()
   load()
   vim.keymap.set("i", "<Tab>", accept, { expr = true, silent = true, desc = "Accept AI suggestion" })
   vim.keymap.set("n", "<leader>ai", M.toggle, { desc = "Toggle AI completion" })
+  vim.keymap.set("n", "<leader>?", M.toggle, { desc = "Toggle AI completion" })
   vim.keymap.set("n", "<leader>ap", M.switch, { desc = "Switch AI provider" })
   -- Defer so startup isn't blocked by the language server download/launch.
   vim.defer_fn(apply, 100)
