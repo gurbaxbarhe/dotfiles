@@ -38,15 +38,12 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
   exit 1
 fi
 
-# Shell
 link terminal/zsh/.zshrc           "$HOME/.zshrc"
 link terminal/zsh/gurbax.zsh-theme "$HOME/.oh-my-zsh/custom/themes/gurbax.zsh-theme"
 
-# tmux
 link terminal/tmux/.tmux.conf "$HOME/.tmux.conf"
 link terminal/tmux/scripts    "$HOME/.tmux/scripts"
 
-# Editors
 link nvim                   "$HOME/.config/nvim"
 link workspace/.nanorc      "$HOME/.nanorc"
 link workspace/nano-syntax  "$HOME/.nano-syntax"
@@ -61,8 +58,7 @@ fi
 
 # Claude Code theme (pick it with /theme)
 link claude/themes/github-dark-plus.json "$HOME/.claude/themes/github-dark-plus.json"
-# Status line script; turn it on with "statusLine": {"type": "command", "command": "~/.claude/statusline.sh"}
-# in ~/.claude/settings.json
+# Status line; enable with "statusLine": {"type": "command", "command": "~/.claude/statusline.sh"} in settings.json
 link claude/statusline.sh "$HOME/.claude/statusline.sh"
 
 if [ -n "${TMUX:-}" ]; then

@@ -1,23 +1,6 @@
-# GitHub Dark theme for nano, matched to Cursor.
-# Canonical location: this dotfiles dir. ~/.nanorc is a symlink to it.
-#
-# Color notes (verified empirically against xterm-256color in nano 6/8):
-#   nano only accepts named colors or 3-digit #RGB. 3-digit hex is mapped to
-#   the nearest 6x6x6 cube slot (no grayscale-ramp access). Empirical map:
-#     #dbf -> idx 183 (#d7afff)  matches GH Dark identifier #D2A8FF
-#     #f88 -> idx 210 (#ff8787)  matches GH Dark keyword    #FF7B72
-#     #adf -> idx 153 (#afd7ff)  matches GH Dark string     #A5D6FF
-#     #8cf -> idx 117 (#87d7ff)  matches GH Dark number     #79C0FF
-#     #fa6 -> idx 215 (#ffaf5f)  matches GH Dark type       #FFA657
-#     #888 -> idx 102 (#878787)  matches GH Dark comment    #8B949E
-#     #5af -> idx 75  (#5fafff)  matches GH Dark link       #58A6FF
-#     #ccd -> idx 188 (#d7d7d7)  matches GH Dark fg         #C9D1D9
-#     #122 -> idx 16  (#000000)  near GH Dark chrome        #161B22
-#
-# Include order: nano picks the LAST matching syntax, not the first.
-# So stock files must come FIRST and custom GitHub-Dark files LAST.
+# GitHub Dark theme for nano, matched to Cursor. nano takes only named colors or
+# 3-digit #RGB, mapped to the nearest 256-color cube slot.
 
-# --- Editor options ---
 set linenumbers
 set mouse
 set softwrap
@@ -31,17 +14,8 @@ set zap
 set historylog
 set positionlog
 set tabsize 4
-# user prefers real tabs (editor.insertSpaces: false in Cursor)
 
-# --- UI chrome: leave at nano defaults ---
-# (no set *color for titlebar, line numbers, status bar, help bar keys,
-#  prompts, errors, selection, stripe, scrollbar, spotlight, minibar — the
-#  terminal's default palette handles these cleanly.)
-
-# --- Syntax highlighting ---
-# Stock files FIRST (catch languages we didn't customize).
-# Custom GitHub-Dark files LAST so they win the last-match resolution
-# for languages they cover.
+# nano uses the LAST matching syntax, so the custom GitHub Dark files go after the stock ones.
 include "/opt/homebrew/share/nano/*.nanorc"
 include "/opt/homebrew/share/nano/extra/*.nanorc"
 include "~/.nano-syntax/*.nanorc"

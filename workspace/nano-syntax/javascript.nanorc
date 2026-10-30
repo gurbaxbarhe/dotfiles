@@ -1,14 +1,11 @@
 ## GitHub Dark — JavaScript / JSX
-## Colors: #dbf identifier  #f88 keyword  #adf string  #8cf literal/number
-##         #fa6 type        #888 comment  (see ~/.nanorc for mapping notes)
 ## Rule order: broad first, specific last (nano applies later rules over earlier).
 
 syntax "javascript-gh" "\.([cm]?jsx?)$"
 magic "JavaScript source"
 comment "//"
 
-# Identifiers — purple (GH Dark support.function #D2A8FF), broad catch-all.
-# This paints all user-defined names (vars, functions, imports) purple.
+# Identifiers: purple catch-all for user-defined names.
 color #dbf "\<[a-zA-Z_$][a-zA-Z0-9_$]*\>"
 
 # Numbers
@@ -20,8 +17,7 @@ color #8cf "\<0[oO][0-7]+n?\>"
 # Built-in classes / constructors — GH Dark's entity.name.class & support.class (orange)
 color #fa6 "\<(Array|Boolean|Number|Object|String|Symbol|Function|Promise|Map|Set|WeakMap|WeakSet|Date|RegExp|Error|TypeError|RangeError|SyntaxError|JSON|Math|BigInt|Infinity|NaN)\>"
 
-# Built-in support variables — GH Dark's support.variable (orange, distinct
-# from user-defined variables)
+# Built-in support variables (orange, distinct from user-defined ones)
 color #fa6 "\<(console|process|window|document|globalThis|Buffer)\>"
 
 # Built-in support functions — GH Dark's support.function (purple, #D2A8FF)

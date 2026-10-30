@@ -6,7 +6,6 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
--- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable",
@@ -74,9 +73,7 @@ require("lazy").setup({
             ["@variable.parameter"] = { fg = "#ffab70" },
             ["@variable.member"] = { fg = "#e1e4e8" },
 
-            -- LSP semantic tokens. Same mechanism Cursor uses, so these are the
-            -- colors that actually decide the final result. Each mapping is
-            -- VS Code's default token->scope rule resolved against dark.json.
+            -- LSP semantic tokens decide the final color, as in Cursor (VS Code's token->scope rules).
             ["@lsp.type.namespace"]     = { fg = "#b392f0" },
             ["@lsp.type.type"]          = { fg = "#b392f0" },
             ["@lsp.type.struct"]        = { fg = "#b392f0" },
@@ -106,9 +103,7 @@ require("lazy").setup({
             ["@lsp.typemod.property.readonly"]         = { fg = "#79b8ff" },
             ["@lsp.typemod.variable.defaultLibrary"]   = { fg = "#79b8ff" },
             ["@lsp.typemod.property.defaultLibrary"]   = { fg = "#79b8ff" },
-            -- Callables stay purple even when they come from the default library:
-            -- verified against Cursor (.map/.filter/console.error render purple,
-            -- while Map/Set/console themselves render blue).
+            -- Callables stay purple even from the default library, as in Cursor (.map, console.error).
             ["@lsp.typemod.function.defaultLibrary"]   = { fg = "#b392f0" },
             ["@lsp.typemod.method.defaultLibrary"]     = { fg = "#b392f0" },
             ["@lsp.typemod.member.defaultLibrary"]     = { fg = "#b392f0" },
@@ -162,8 +157,7 @@ require("lazy").setup({
     end,
   },
 
-  -- Treesitter: real syntax parsing. Without it Neovim falls back to regex
-  -- highlighting, which leaves most tokens uncolored.
+  -- Treesitter: real syntax parsing; without it most tokens stay uncolored.
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
@@ -440,14 +434,12 @@ require("lazy").setup({
 
 require("ai").setup()
 
--- Appearance
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 
--- Editing
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -491,15 +483,12 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "WinEnter" }, {
   end,
 })
 vim.o.laststatus = 0 -- no bottom statusline; winbar replaces it
-vim.o.ruler = false  -- and no line/col readout in the command line
+vim.o.ruler = false
 
--- Escape terminal mode with <Esc><Esc>
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
 
--- Mac-style selection: Shift+arrows select by character, Option+Shift+Left/Right
--- by word, from normal or insert mode. iTerm keeps Cmd+C, so every selection is
--- copied as it grows (mouse ones on release) and Cmd+V pastes it anywhere. A plain
--- arrow ends the selection.
+-- Mac-style selection: Shift+arrows by character, Option+Shift+Left/Right by word.
+-- iTerm keeps Cmd+C, so selections copy as they grow (mouse ones on release).
 vim.opt.keymodel = "stopsel"
 vim.keymap.set("x", "<LeftRelease>", "<LeftRelease>ygv")
 vim.keymap.set("x", "<2-LeftRelease>", "<2-LeftRelease>ygv")
@@ -527,7 +516,6 @@ vim.keymap.set("n", "<leader>n", function()
 end, { desc = "New file" })
 vim.keymap.set("n", "<leader>z", "u", { desc = "Undo" })
 vim.keymap.set("n", "<leader>Z", "<C-r>", { desc = "Redo" })
--- Option+Up/Down move the line or selection.
 vim.keymap.set("n", "<M-Up>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 vim.keymap.set("n", "<M-Down>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 vim.keymap.set("i", "<M-Up>", "<Esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
