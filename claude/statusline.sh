@@ -15,5 +15,5 @@ bar=$(printf '%*s' "$filled" '' | tr ' ' '█')$(printf '%*s' $((10 - filled)) '
 if [ "$pct" -ge 80 ]; then color=31; elif [ "$pct" -ge 50 ]; then color=33; else color=32; fi
 
 printf '\033[36m[%s]\033[0m ❏ %s' "$model" "$folder"
-[ -n "$branch" ] && printf ' | ⎇ %s' "$branch"
+[ -n "$branch" ] && printf ' | ⎇  %s' "$branch"
 printf ' | \033[%sm%s\033[0m %s%%\n' "$color" "$bar" "$pct"
