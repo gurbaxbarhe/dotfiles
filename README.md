@@ -20,7 +20,7 @@ Configs for my dev environment - IDE themes, terminal, tmux, nvim, and keybindin
 | `nvim/` | `~/.config/nvim` |
 | `lazygit/config.yml` | `~/Library/Application Support/lazygit/` |
 | `git/delta.gitconfig` | included from `~/.gitconfig` |
-| `claude/themes/` | `~/.claude/themes/` |
+| `claude/themes/`, `statusline.sh` | `~/.claude/themes/`, `~/.claude/statusline.sh` |
 | `workspace/.nanorc`, `nano-syntax/` | `~/.nanorc`, `~/.nano-syntax` |
 
 ## Shortcuts

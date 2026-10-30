@@ -61,6 +61,9 @@ fi
 
 # Claude Code theme (pick it with /theme)
 link claude/themes/github-dark-plus.json "$HOME/.claude/themes/github-dark-plus.json"
+# Status line script; turn it on with "statusLine": {"type": "command", "command": "~/.claude/statusline.sh"}
+# in ~/.claude/settings.json
+link claude/statusline.sh "$HOME/.claude/statusline.sh"
 
 if [ -n "${TMUX:-}" ]; then
   tmux source-file "$HOME/.tmux.conf" && echo "tmux config reloaded"
