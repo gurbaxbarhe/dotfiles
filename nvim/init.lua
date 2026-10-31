@@ -19,13 +19,27 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
-      -- "github" is stock github_dark_default, the colors on github.com.
-      -- "custom" is the Cursor-tuned scheme in lua/colors/custom.lua.
+      -- "github": github.com's code colors (github_dark_default) on the old backgrounds.
+      -- "custom": the full Cursor-tuned scheme in lua/colors/custom-code-colors/.
       local THEME = "github"
       local function apply(name)
-        if name == "custom" then return require("colors.custom").apply() end
+        if name == "custom" then return require("colors.custom-code-colors").apply() end
         require("github-theme").reset()
-        require("github-theme").setup({})
+        require("github-theme").setup({
+          specs = {
+            github_dark_default = {
+              bg0 = "#1f2428", bg1 = "#24292e", bg2 = "#2b3036", bg3 = "#2f363d", bg4 = "#444d56",
+              fg1 = "#e1e4e8", fg2 = "#959da5", fg3 = "#444d56",
+              sel0 = "#284566", sel1 = "#2b3036", sel2 = "#5e5632",
+            },
+          },
+          groups = {
+            github_dark_default = {
+              WinBar   = { fg = "#1f2428", bg = "#477fbf", bold = true },
+              WinBarNC = { fg = "#e1e4e8", bg = "#1f2428" },
+            },
+          },
+        })
         vim.cmd("colorscheme github_dark_default")
       end
       apply(THEME)
@@ -149,7 +163,14 @@ require("lazy").setup({
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       { "<leader>b", "<cmd>NvimTreeToggle<cr>",   desc = "Toggle file tree" },
-      { "<leader>E", "<cmd>NvimTreeFindFile<cr>", desc = "Reveal file in tree" },
+      -- iTerm sends F15 for Cmd+Shift+E: hop between the tree and the file, never closing the tree.
+      { "<F15>", function()
+        if vim.bo.filetype ~= "NvimTree" then
+          return require("nvim-tree.api").tree.find_file({ open = true, focus = true })
+        end
+        vim.cmd("wincmd p")
+        if vim.bo.filetype == "NvimTree" then vim.cmd("wincmd h") end
+      end, desc = "Toggle focus: tree / file" },
     },
     opts = {
       view = { width = 40, side = "right" },
