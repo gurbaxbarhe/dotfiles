@@ -317,8 +317,8 @@ require("lazy").setup({
       },
     },
     keys = {
-      { "<leader><", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous tab" },
-      { "<leader>>", "<cmd>BufferLineCycleNext<cr>", desc = "Next tab" },
+      { "<leader><", function() _G.tab_cycle("<") end, desc = "Previous tab (then < > repeat)" },
+      { "<leader>>", function() _G.tab_cycle(">") end, desc = "Next tab (then < > repeat)" },
       { "<leader>w", function()
         -- From the tree (or any non-file window), close the file you were last in.
         local win = vim.api.nvim_get_current_win()
@@ -534,8 +534,16 @@ vim.keymap.set("n", "<leader>n", function()
     vim.cmd.edit(vim.fn.fnameescape(path))
   end)
 end, { desc = "New file" })
-for _, d in ipairs({ "h", "j", "k", "l" }) do
-  vim.keymap.set("n", "<C-" .. d .. ">", "<C-w>" .. d, { desc = "Window " .. d })
+-- After Space+< or Space+>, keep pressing < or > to cycle tabs; any other key ends it and runs.
+function _G.tab_cycle(key)
+  while key == "<" or key == ">" do
+    vim.cmd(key == "<" and "BufferLineCyclePrev" or "BufferLineCycleNext")
+    vim.cmd.redraw()
+    local ok, next_key = pcall(vim.fn.getcharstr)
+    if not ok then return end
+    key = next_key
+  end
+  vim.api.nvim_feedkeys(key, "m", false)
 end
 -- Mac line/word jumps: iTerm sends Ctrl+A / Ctrl+E for Cmd+Left / Cmd+Right.
 for _, k in ipairs({ { "<C-a>", "^", "<C-o>^" }, { "<C-e>", "$", "<End>" },

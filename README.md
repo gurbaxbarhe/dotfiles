@@ -47,7 +47,6 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | --- | --- | --- |
 | `Cmd+B` | `Space+B` | Show / hide the file tree. Click a file to open it, a folder to expand it |
 | `Cmd+Shift+E` | `Space+Shift+E` | Open the file tree with the current file highlighted |
-| click | `Ctrl+H` / `Ctrl+L` | Move between the file and the tree (`Ctrl+J` / `Ctrl+K` for up / down splits) |
 | `Cmd+P` | `Space+P` | Find a file by name |
 | `Cmd+Shift+P` | `Space+Shift+P` | Command palette: search every nvim command |
 | `Cmd+F` | `Space+F` | Search inside this file |
@@ -55,7 +54,7 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `Cmd+N` | `Space+N` | New file: asks for a name, starting in the current file's folder |
 | `Cmd+S` | `Space+S` | Save the file |
 | `Cmd+W` | `Space+W` | Close the current tab (warns if unsaved) |
-| `Cmd+Shift+[` / `]` | `Space+Shift+,` / `.` (`Space+<` / `>`) | Previous / next tab, wrapping around at the ends |
+| `Cmd+Shift+[` / `]` | `Space+Shift+,` / `.` (`Space+<` / `>`) | Previous / next tab, wrapping around. Keep pressing `<` / `>` to keep cycling |
 | `Cmd+Z` / `Cmd+Shift+Z` | `u` / `Ctrl+R` | Undo / redo |
 | `Cmd+/` | `Space+/` | Comment / uncomment the line, or the selected lines |
 | `Cmd+Shift+/` | `Space+Shift+/` | Turn AI autocomplete (Cursor Tab) on / off |
