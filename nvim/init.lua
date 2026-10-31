@@ -346,39 +346,54 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>ds", gs.stage_hunk,   { desc = "Stage hunk" })
       vim.keymap.set("n", "<leader>dr", gs.reset_hunk,   { desc = "Reset hunk" })
       vim.keymap.set("n", "<leader>db", gs.blame_line,   { desc = "Blame line" })
-      -- Unified PR diff inside the file: compare against where the branch left
-      -- the default branch, with deleted lines shown inline. Toggle off to go back.
-      local unified = false
+      -- Inline diffs in the file itself, deleted lines in red. No base means uncommitted
+      -- changes; a base shows everything since the branch left the default branch.
+      local function merge_base()
+        local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
+        if vim.v.shell_error == 0 then return base end
+        vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
+      end
+      local inline = false
+      local function set_inline(on, base)
+        inline = on
+        if base then gs.change_base(base, true) else gs.reset_base(true) end
+        gs.toggle_linehl(on)
+        gs.toggle_word_diff(on)
+        gs.toggle_deleted(on)
+      end
       vim.keymap.set("n", "<leader>du", function()
-        unified = not unified
-        if unified then
-          local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
-          if vim.v.shell_error ~= 0 then
-            unified = false
-            return vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
-          end
-          gs.change_base(base, true)
-        else
-          gs.reset_base(true)
+        if inline then return set_inline(false) end
+        local base = merge_base()
+        if base then set_inline(true, base) end
+      end, { desc = "Toggle inline PR diff" })
+      vim.keymap.set("n", "<leader>dm", function()
+        local base = merge_base()
+        if not base then return end
+        set_inline(true, base)
+        require("telescope.builtin").git_files({ prompt_title = "Changed on branch",
+          git_command = { "git", "diff", "--name-only", "--relative", base } })
+      end, { desc = "PR changes, inline" })
+      vim.keymap.set("n", "<leader>dd", function()
+        if vim.fn.system({ "git", "status", "--porcelain" }) == "" then
+          return vim.notify("No uncommitted changes")
         end
-        gs.toggle_linehl(unified)
-        gs.toggle_word_diff(unified)
-        gs.toggle_deleted(unified)
-      end, { desc = "Toggle unified PR diff" })
+        set_inline(true)
+        require("telescope.builtin").git_status({ prompt_title = "Uncommitted changes" })
+      end, { desc = "Uncommitted changes, inline" })
+      vim.keymap.set("n", "<leader>dq", function()
+        set_inline(false)
+        pcall(vim.cmd, "DiffviewClose")
+      end, { desc = "Close diff" })
     end,
   },
 
-  -- Side-by-side diffs with a file panel. <leader>dm is "the PR view": every
-  -- file changed on this branch since it left the remote's default branch.
+  -- File history only; diffs are inline through gitsigns.
   {
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "<leader>dd", "<cmd>DiffviewOpen<cr>",                     desc = "Diff working tree" },
-      { "<leader>dm", "<cmd>DiffviewOpen origin/HEAD...HEAD<cr>",  desc = "Diff branch vs default (PR)" },
-      { "<leader>dh", "<cmd>DiffviewFileHistory %<cr>",            desc = "File history" },
-      { "<leader>dq", "<cmd>DiffviewClose<cr>",                    desc = "Close diff" },
+      { "<leader>dh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
     },
   },
 
@@ -474,12 +489,13 @@ function _G.winbar()
   return string.format(" %s  %%f %%m%%=%s  %%l:%%c  %%P ", MODES[m] or m:upper(), ai)
 end
 -- Set per window, not globally: an empty window-local winbar falls back to the
--- global one, so a global value can't be hidden in the tree (bufferline labels it).
+-- global one, so a global value can't be hidden in side panels like the tree.
 vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "WinEnter" }, {
   callback = function()
     if vim.api.nvim_win_get_config(0).relative ~= "" then return end
-    local tree = vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil
-    vim.wo.winbar = tree and "" or "%{%v:lua.winbar()%}"
+    local name = vim.api.nvim_buf_get_name(0)
+    local panel = vim.bo.buftype ~= "" or name:match("NvimTree_") or name:match("^diffview://")
+    vim.wo.winbar = panel and "" or "%{%v:lua.winbar()%}"
   end,
 })
 vim.o.laststatus = 0 -- no bottom statusline; winbar replaces it

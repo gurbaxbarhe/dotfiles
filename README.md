@@ -82,10 +82,10 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `<leader>du` | Toggle the branch's changes inline in this file (deleted lines in red); again to turn off |
 | `]h` / `[h` | Next / prev changed hunk |
 | `<leader>dp` `ds` `dr` `db` | Preview / stage / reset hunk, blame line |
-| `<leader>dd` | Diff working tree (diffview) |
-| `<leader>dm` | PR view: everything changed on this branch vs the default branch |
-| `]c` / `[c`, `Tab` / `S-Tab` in diffview | Next / prev change, next / prev file |
-| `<leader>dh` / `<leader>dq` | File history / close diff |
+| `<leader>dm` | PR view: list the branch's changed files; each opens with its changes inline |
+| `<leader>dd` | Same for uncommitted changes |
+| `<leader>dq` | Turn inline diffs off |
+| `<leader>dh` | File history (diffview) |
 | `<leader>o` | GitHub PR list (octo) |
 | `<leader>ai` / `<leader>ap` | AI completion on/off / switch windsurf <-> copilot |
 | `Tab` (insert) | Accept AI suggestion |
