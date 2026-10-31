@@ -61,8 +61,8 @@ link claude/themes/github-dark-plus.json "$HOME/.claude/themes/github-dark-plus.
 # Status line; enable with "statusLine": {"type": "command", "command": "~/.claude/statusline.sh"} in settings.json
 link claude/statusline.sh "$HOME/.claude/statusline.sh"
 
-# iTerm: Ctrl+Shift+T reopens the last closed tab or pane (Edit > Undo Close)
-defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "Undo Close" '^$t'
+# iTerm: Cmd+Shift+T reopens the last closed tab or pane (Edit > Undo Close)
+defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "Undo Close" '@$t'
 
 if [ -n "${TMUX:-}" ]; then
   tmux source-file "$HOME/.tmux.conf" && echo "tmux config reloaded"

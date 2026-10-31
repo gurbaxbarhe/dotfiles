@@ -94,3 +94,9 @@ export PATH="$HOME/.local/bin:$PATH"
 export BAT_THEME="GitHub-Dark"
 source /opt/homebrew/share/google-cloud-sdk/path.zsh.inc
 source /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc
+
+# iTerm sends F13 / F14 for Cmd+Shift+, / . (nvim tab switching); ignore them at the prompt
+_ignore_key() {}
+zle -N _ignore_key
+bindkey '\e[1;2P' _ignore_key
+bindkey '\e[1;2Q' _ignore_key
