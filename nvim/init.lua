@@ -183,7 +183,10 @@ require("lazy").setup({
           tsserver = { path = vim.fn.expand("~/.nvm/versions/node/v22.22.3/lib/node_modules/typescript/lib/tsserver.js") },
         },
       })
-      vim.lsp.enable({ "ts_ls" })
+      -- Attach in any git repo, not only ones with a postgres-language-server.jsonc.
+      vim.lsp.config("postgres_lsp", { root_markers = { ".git" }, workspace_required = false })
+      vim.lsp.enable({ "ts_ls", "eslint", "pyright", "ruff", "postgres_lsp" })
+      vim.diagnostic.config({ virtual_text = true })
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
           local o = function(d) return { buffer = ev.buf, desc = d } end

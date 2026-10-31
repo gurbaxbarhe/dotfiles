@@ -11,3 +11,7 @@ brew "lazygit"
 brew "gh"
 brew "zsh-autosuggestions"
 cask "font-symbols-only-nerd-font"
+brew "pyright"
+brew "ruff"
+brew "postgres-language-server"
+brew "vscode-langservers-extracted"  # eslint language server
