@@ -390,6 +390,9 @@ require("lazy").setup({
     end,
   },
 
+  -- Merge conflicts: co / ct / cb / c0 keep ours / theirs / both / none, ]x [x jump.
+  { "akinsho/git-conflict.nvim", version = "*", config = true },
+
   -- File history only; diffs are inline through gitsigns.
   {
     "sindrets/diffview.nvim",
