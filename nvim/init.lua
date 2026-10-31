@@ -514,6 +514,12 @@ vim.keymap.set("n", "<leader>n", function()
     vim.cmd.edit(vim.fn.fnameescape(path))
   end)
 end, { desc = "New file" })
+-- Mac line/word jumps: iTerm sends Ctrl+A / Ctrl+E for Cmd+Left / Cmd+Right.
+for _, k in ipairs({ { "<C-a>", "^", "<C-o>^" }, { "<C-e>", "$", "<End>" },
+                     { "<M-Left>", "b", "<C-o>b" }, { "<M-Right>", "e", "<C-o>e<Right>" } }) do
+  vim.keymap.set({ "n", "x" }, k[1], k[2])
+  vim.keymap.set("i", k[1], k[3])
+end
 vim.keymap.set("n", "<M-Up>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 vim.keymap.set("n", "<M-Down>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 vim.keymap.set("i", "<M-Up>", "<Esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })

@@ -63,6 +63,8 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `F12` / `Shift+F12` | same | Go to definition / list everywhere it's used |
 | `F2` | same | Rename the symbol everywhere it's used |
 | `Option+↑` / `↓` | same | Move the line or selection up / down |
+| `Cmd+←` / `→` | same | Start / end of the line (normal, insert and visual) |
+| `Option+←` / `→` | same | Back / forward a word |
 
 | Keys | Does |
 | --- | --- |
