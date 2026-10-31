@@ -47,6 +47,7 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | --- | --- | --- |
 | `Cmd+B` | `Space+B` | Show / hide the file tree. Click a file to open it, a folder to expand it |
 | `Cmd+Shift+E` | `Space+Shift+E` | Open the file tree with the current file highlighted |
+| click | `Ctrl+H` / `Ctrl+L` | Move between the file and the tree (`Ctrl+J` / `Ctrl+K` for up / down splits) |
 | `Cmd+P` | `Space+P` | Find a file by name |
 | `Cmd+Shift+P` | `Space+Shift+P` | Command palette: search every nvim command |
 | `Cmd+F` | `Space+F` | Search inside this file |

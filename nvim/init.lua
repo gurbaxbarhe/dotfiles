@@ -534,6 +534,9 @@ vim.keymap.set("n", "<leader>n", function()
     vim.cmd.edit(vim.fn.fnameescape(path))
   end)
 end, { desc = "New file" })
+for _, d in ipairs({ "h", "j", "k", "l" }) do
+  vim.keymap.set("n", "<C-" .. d .. ">", "<C-w>" .. d, { desc = "Window " .. d })
+end
 -- Mac line/word jumps: iTerm sends Ctrl+A / Ctrl+E for Cmd+Left / Cmd+Right.
 for _, k in ipairs({ { "<C-a>", "^", "<C-o>^" }, { "<C-e>", "$", "<End>" },
                      { "<M-Left>", "b", "<C-o>b" }, { "<M-Right>", "e", "<C-o>e<Right>" } }) do
