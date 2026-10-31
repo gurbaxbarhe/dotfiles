@@ -273,7 +273,7 @@ require("lazy").setup({
       { "<leader>E", "<cmd>NvimTreeFindFile<cr>", desc = "Reveal file in tree" },
     },
     opts = {
-      view = { width = 32, side = "right" },
+      view = { width = 40, side = "right" },
       -- Label the root from the repo down (scriptrunner-backend/src), not the full path.
       renderer = {
         root_folder_label = function(path)
@@ -317,8 +317,8 @@ require("lazy").setup({
       },
     },
     keys = {
-      { "<leader>{", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous tab" },
-      { "<leader>}", "<cmd>BufferLineCycleNext<cr>", desc = "Next tab" },
+      { "<leader><", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous tab" },
+      { "<leader>>", "<cmd>BufferLineCycleNext<cr>", desc = "Next tab" },
       { "<leader>w", function()
         -- From the tree (or any non-file window), close the file you were last in.
         local win = vim.api.nvim_get_current_win()
@@ -502,6 +502,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "WinEnter" }, {
   end,
 })
 vim.o.laststatus = 0 -- no bottom statusline; winbar replaces it
+vim.o.cmdheight = 0  -- windows reach the bottom; the command line shows only while in use
 vim.o.ruler = false
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")

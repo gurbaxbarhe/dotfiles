@@ -54,7 +54,7 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `Cmd+N` | `Space+N` | New file: asks for a name, starting in the current file's folder |
 | `Cmd+S` | `Space+S` | Save the file |
 | `Cmd+W` | `Space+W` | Close the current tab (warns if unsaved) |
-| `Cmd+Shift+[` / `]` | `Space+Shift+[` / `]` | Previous / next tab |
+| `Cmd+Shift+[` / `]` | `Space+Shift+,` / `.` (`Space+<` / `>`) | Previous / next tab, wrapping around at the ends |
 | `Cmd+Z` / `Cmd+Shift+Z` | `u` / `Ctrl+R` | Undo / redo |
 | `Cmd+/` | `Space+/` | Comment / uncomment the line, or the selected lines |
 | `Cmd+Shift+/` | `Space+Shift+/` | Turn AI autocomplete (Cursor Tab) on / off |
