@@ -191,7 +191,7 @@ require("lazy").setup({
           vim.keymap.set("n", "gd", vim.lsp.buf.definition,      o("Go to definition"))
           vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, o("Go to type definition"))
           vim.keymap.set("n", "gr", tb.lsp_references,           o("Find references"))
-          vim.keymap.set("n", "gi", tb.lsp_implementations,      o("Go to implementation"))
+          vim.keymap.set("n", "gI", tb.lsp_implementations,      o("Go to implementation"))
           vim.keymap.set("n", "K",  vim.lsp.buf.hover,           o("Hover docs"))
           vim.keymap.set("n", "<leader>O", tb.lsp_document_symbols, o("Document symbols"))
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,  o("Rename symbol"))

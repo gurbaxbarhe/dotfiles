@@ -73,7 +73,7 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `Shift+arrows` / `Option+Shift+←→` | Select by character / word (normal or insert); it's already copied, so `Cmd+V` pastes it. A plain arrow ends the selection |
 | Mouse drag / double-click | Select text; copied on release, so `Cmd+V` pastes it anywhere |
 | `<C-q>` in a picker | Send results to the quickfix list (`:cdo s/a/b/ \| update`) |
-| `gd` / `gD` / `gi` | Go to definition / type definition / implementation |
+| `gd` / `gD` / `gI` | Go to definition / type definition / implementation |
 | `gr` / `K` | Find references / hover docs |
 | `<leader>rn` / `<leader>ca` | Rename symbol / code action |
 | `<leader>dc` | Fuzzy-find files changed on this branch, committed or not |
