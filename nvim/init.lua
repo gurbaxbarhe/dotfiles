@@ -35,6 +35,22 @@ require("lazy").setup({
           },
           groups = {
             github_dark_default = {
+              -- github.com's highlighter (prettylights): types are plain text, capitalised
+              -- values (new X, extends X) orange, operators blue, this/super plain.
+              ["@type"] = { fg = "#e6edf3" },
+              ["@type.builtin"] = { fg = "#e6edf3" },
+              ["@type.definition"] = { fg = "#e6edf3" },
+              ["@lsp.type.interface"] = { fg = "#e6edf3" },
+              ["@lsp.type.type"] = { fg = "#e6edf3" },
+              ["@lsp.type.typeParameter"] = { fg = "#e6edf3" },
+              ["@lsp.type.enum"] = { fg = "#e6edf3" },
+              ["@lsp.type.class"] = { fg = "#ffa657" },
+              ["@lsp.typemod.class.declaration"] = { fg = "#e6edf3" },
+              ["@constructor"] = { fg = "#ffa657" },
+              ["@variable.builtin"] = { fg = "#e6edf3" },
+              ["@variable.parameter"] = { fg = "#e6edf3" },
+              ["@operator"] = { fg = "#79c0ff" },
+              envField = { fg = "#ffa657" }, -- .env keys are orange on github.com
               WinBar   = { fg = "#1f2428", bg = "#477fbf", bold = true },
               WinBarNC = { fg = "#e1e4e8", bg = "#1f2428" },
             },
@@ -214,6 +230,12 @@ require("lazy").setup({
       options = {
         diagnostics = "nvim_lsp",
         offsets = { { filetype = "NvimTree", text = "Explorer", separator = true } },
+      },
+      -- Bar behind the tabs and its separators use the editor background instead of near-black.
+      highlights = {
+        fill = { bg = { attribute = "bg", highlight = "Normal" } },
+        offset_separator = { bg = { attribute = "bg", highlight = "Normal" } },
+        trunc_marker = { bg = { attribute = "bg", highlight = "Normal" } },
       },
     },
     keys = {
