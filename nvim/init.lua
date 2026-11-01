@@ -19,44 +19,16 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
-      -- "github": github.com's code colors (github_dark_default) on the old backgrounds.
-      -- "custom": the full Cursor-tuned scheme in lua/colors/custom-code-colors/.
+      -- "github": github.com's code colors on the old backgrounds (lua/colors/github-dotcom).
+      -- "custom": the full Cursor-tuned scheme (lua/colors/custom-code-colors).
       local THEME = "github"
+      local base = vim.fn.stdpath("config") .. "/lua/colors/"
+      local schemes = { github = "github-dotcom", custom = "custom-code-colors" }
       local function apply(name)
-        if name == "custom" then return require("colors.custom-code-colors").apply() end
-        require("github-theme").reset()
-        require("github-theme").setup({
-          specs = {
-            github_dark_default = {
-              bg0 = "#1f2428", bg1 = "#24292e", bg2 = "#2b3036", bg3 = "#2f363d", bg4 = "#444d56",
-              fg1 = "#e1e4e8", fg2 = "#959da5", fg3 = "#444d56",
-              sel0 = "#284566", sel1 = "#2b3036", sel2 = "#5e5632",
-            },
-          },
-          groups = {
-            github_dark_default = {
-              -- github.com's highlighter (prettylights): types are plain text, capitalised
-              -- values (new X, extends X) orange, operators blue, this/super plain.
-              ["@type"] = { fg = "#e6edf3" },
-              ["@type.builtin"] = { fg = "#e6edf3" },
-              ["@type.definition"] = { fg = "#e6edf3" },
-              ["@lsp.type.interface"] = { fg = "#e6edf3" },
-              ["@lsp.type.type"] = { fg = "#e6edf3" },
-              ["@lsp.type.typeParameter"] = { fg = "#e6edf3" },
-              ["@lsp.type.enum"] = { fg = "#e6edf3" },
-              ["@lsp.type.class"] = { fg = "#ffa657" },
-              ["@lsp.typemod.class.declaration"] = { fg = "#e6edf3" },
-              ["@constructor"] = { fg = "#ffa657" },
-              ["@variable.builtin"] = { fg = "#e6edf3" },
-              ["@variable.parameter"] = { fg = "#e6edf3" },
-              ["@operator"] = { fg = "#79c0ff" },
-              envField = { fg = "#ffa657" }, -- .env keys are orange on github.com
-              WinBar   = { fg = "#1f2428", bg = "#477fbf", bold = true },
-              WinBarNC = { fg = "#e1e4e8", bg = "#1f2428" },
-            },
-          },
-        })
-        vim.cmd("colorscheme github_dark_default")
+        -- Each scheme's queries/ only load while it's selected; open files keep theirs until reopened.
+        for _, dir in pairs(schemes) do vim.opt.rtp:remove(base .. dir) end
+        vim.opt.rtp:append(base .. schemes[name])
+        require("colors." .. schemes[name]).apply()
       end
       apply(THEME)
       vim.api.nvim_create_user_command("Theme", function(o) apply(o.args) end, {

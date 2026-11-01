@@ -3,9 +3,6 @@
 local M = {}
 
 function M.apply()
-  -- Its Cursor-parity highlight queries live beside this file; files opened after this pick them up.
-  local dir = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
-  if not vim.tbl_contains(vim.opt.rtp:get(), dir) then vim.opt.rtp:append(dir) end
   require("github-theme").reset()
   -- The plugin's github_dark drifted to #30363d; these overrides restore the
   -- exact palette from Cursor's "GitHub Dark" (vscode-github-theme dark.json).
