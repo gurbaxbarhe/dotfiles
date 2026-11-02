@@ -1,6 +1,7 @@
 -- Leader must be set before plugins load.
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- Octo's rarely used keys; its main ones are set in the octo.nvim spec.
+vim.g.maplocalleader = " z"
 -- nvim-tree replaces netrw, and bufferline needs true color at setup.
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -69,6 +70,11 @@ require("lazy").setup({
       vim.diagnostic.config({ virtual_text = true })
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
+          -- Octo review diffs are virtual files, so a server would only report false errors on them.
+          if vim.api.nvim_buf_get_name(ev.buf):match("^octo://") then
+            vim.schedule(function() vim.lsp.buf_detach_client(ev.buf, ev.data.client_id) end)
+            return
+          end
           local o = function(d) return { buffer = ev.buf, desc = d } end
           local tb = require("telescope.builtin")
           vim.keymap.set("n", "gd", vim.lsp.buf.definition,      o("Go to definition"))
@@ -189,6 +195,8 @@ require("lazy").setup({
       spec = {
         { "<leader>d", group = "Git / diff" },
         { "<leader>a", group = "AI / Claude" },
+        { "<leader>v", group = "GitHub review (Octo)" },
+        { "<leader>z", group = "Octo, less used" },
       },
     },
   },
@@ -298,12 +306,53 @@ require("lazy").setup({
     },
   },
 
+  -- Code colors inside diff buffers, like Octo's full PR diff (<leader>vp).
+  {
+    "barrettruth/diffs.nvim",
+    lazy = false,
+    init = function()
+      vim.g.diffs = { extra_filetypes = { "diff" } }
+    end,
+  },
+
   -- GitHub PRs/issues inside nvim via gh: list, review, comment.
   {
     "pwntester/octo.nvim",
     cmd = "Octo",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-    opts = {},
+    config = function()
+      local function keys(map)
+        for action, lhs in pairs(map) do map[action] = { lhs = lhs } end
+        return map
+      end
+      local comments = { add_comment = "<leader>ca", add_reply = "<leader>cr", delete_comment = "<leader>cd" }
+      local threads = { resolve_thread = "<leader>ct", unresolve_thread = "<leader>cT" }
+      local files = { focus_files = "<leader>ve", toggle_files = "<leader>vb", toggle_viewed = "<leader>vm" }
+      local submit = { submit_review = "<leader>vs", discard_review = "<leader>vd" }
+      require("octo").setup({
+        -- Merging only through :Octo pr merge. A blank lhs skips the key; the picker needs one it can map.
+        picker_config = { mappings = { merge_pr = { lhs = "<Plug>(octo-picker-merge-disabled)" } } },
+        mappings = {
+          issue = keys(vim.deepcopy(comments)),
+          discussion = keys(vim.deepcopy(comments)),
+          pull_request = keys(vim.tbl_extend("error", comments, threads, {
+            review_start = "<leader>vs", review_resume = "<leader>vr",
+            list_changed_files = "<leader>vf", show_pr_diff = "<leader>vp",
+            merge_pr = "", squash_and_merge_pr = "", rebase_and_merge_pr = "", merge_pr_stack = "",
+            merge_pr_queue = "", squash_and_merge_queue = "", rebase_and_merge_queue = "",
+            -- Its menu can squash and merge, and approve_pr approves with no submit window.
+            pr_options = "", approve_pr = "",
+          })),
+          review_thread = keys(vim.tbl_extend("error", comments, threads, { add_suggestion = "<leader>cs" })),
+          review_diff = keys(vim.tbl_extend("error", files, submit, {
+            add_review_comment = "<leader>ca", add_review_suggestion = "<leader>cs",
+          })),
+          file_panel = keys(vim.tbl_extend("error", files, submit)),
+          submit_win = keys({ approve_review = "<leader>va" }),
+        },
+      })
+      require("octo-bot-comments").setup()
+    end,
     keys = {
       { "<leader>o", "<cmd>Octo pr list<cr>", desc = "GitHub PRs" },
     },
