@@ -70,9 +70,5 @@ fi
 
 cat <<'EOF'
 
-Done. Manual steps:
-  - iTerm: Settings > Keys > Key Bindings > Presets > Import...
-    and pick terminal/iterm/iterm_keys.itermkeymap (Cmd+F, Cmd+Shift+F, Cmd+Shift+T)
-  - Claude Code: /theme > "GitHub Dark+"
-  - nvim: :Codeium Auth (windsurf) and/or :Copilot auth on first use
+Done. Finish the manual steps in README.md (Setup): nvm, iTerm, Claude Code and nvim.
 EOF

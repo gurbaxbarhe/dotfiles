@@ -10,6 +10,9 @@ brew "git-delta"     # side-by-side git diffs
 brew "lazygit"
 brew "gh"
 brew "zsh-autosuggestions"
+brew "nano"
+brew "tree-sitter-cli"      # builds nvim-treesitter parsers
+cask "gcloud-cli"           # .zshrc sources its shell setup
 cask "font-symbols-only-nerd-font"
 brew "pyright"
 brew "ruff"
