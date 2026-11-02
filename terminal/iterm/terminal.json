@@ -12,11 +12,11 @@
     "Green Component" : 1
   },
   "Foreground Color (Dark)" : {
-    "Red Component" : 1,
-    "Color Space" : "P3",
-    "Blue Component" : 1,
+    "Red Component" : 0.9411764705882353,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.9882352941176471,
     "Alpha Component" : 1,
-    "Green Component" : 1
+    "Green Component" : 0.9647058823529412
   },
   "Cursor Text Color" : {
     "Red Component" : 1,
@@ -52,11 +52,11 @@
   },
   "Guid" : "6F77AB7D-B603-497A-969E-F249F8E333C7",
   "Cursor Color (Dark)" : {
-    "Red Component" : 0.53725490196078429,
-    "Color Space" : "P3",
-    "Blue Component" : 0.99215686274509807,
+    "Red Component" : 0.4745098039215686,
+    "Color Space" : "sRGB",
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.80000000000000004
+    "Green Component" : 0.7529411764705882
   },
   "Initial Text" : "",
   "Selection Color (Dark)" : {
@@ -245,11 +245,11 @@
 
   ],
   "Link Color (Dark)" : {
-    "Red Component" : 0.53725490196078429,
-    "Color Space" : "P3",
-    "Blue Component" : 0.99215686274509807,
+    "Red Component" : 0.4745098039215686,
+    "Color Space" : "sRGB",
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.80000000000000004
+    "Green Component" : 0.7529411764705882
   },
   "Custom Command" : "No",
   "Jobs to Ignore" : [
@@ -545,11 +545,11 @@
 
   },
   "Bold Color (Dark)" : {
-    "Red Component" : 0.53725490196078429,
-    "Color Space" : "P3",
-    "Blue Component" : 0.99215686274509807,
+    "Red Component" : 0.4745098039215686,
+    "Color Space" : "sRGB",
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.80000000000000004
+    "Green Component" : 0.7529411764705882
   },
   "Link Color" : {
     "Red Component" : 0.19802422821521759,

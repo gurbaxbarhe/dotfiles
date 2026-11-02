@@ -12,8 +12,10 @@ branch=$(git -C "$dir" --no-optional-locks branch --show-current 2>/dev/null)
 
 filled=$((pct / 10))
 bar=$(printf '%*s' "$filled" '' | tr ' ' '█')$(printf '%*s' $((10 - filled)) '' | tr ' ' '░')
-if [ "$pct" -ge 80 ]; then color=31; elif [ "$pct" -ge 50 ]; then color=33; else color=32; fi
+# Same colors as nvim's GitHub theme
+purple='38;2;210;168;255' blue='38;2;121;192;255' orange='38;2;255;166;87' red='38;2;255;123;114' green='38;2;154;251;161'
+if [ "$pct" -ge 80 ]; then color=$red; elif [ "$pct" -ge 50 ]; then color=$orange; else color=$green; fi
 
-printf '\033[36m[%s]\033[0m ❏ %s' "$model" "$folder"
-[ -n "$branch" ] && printf ' | ⎇  %s' "$branch"
+printf '\033[%sm[%s]\033[0m ❏ \033[%sm%s\033[0m' "$purple" "$model" "$blue" "$folder"
+[ -n "$branch" ] && printf ' | ⎇  \033[%sm%s\033[0m' "$orange" "$branch"
 printf ' | \033[%sm%s\033[0m %s%%\n' "$color" "$bar" "$pct"

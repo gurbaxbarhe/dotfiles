@@ -1,13 +1,18 @@
 {
   "name": "GitHub Dark+",
-  "base": "dark",
+  "base": "dark-ansi",
   "overrides": {
     "userMessageBackground": "#3b4450",
     "userMessageBackgroundHover": "#475262",
     "briefLabelYou": "#73ceff",
-    "permission": "#79c0ff",
     "error": "#ff7b72",
     "warning": "#ffa657",
-    "merged": "#d2a8ff"
+    "merged": "#d2a8ff",
+    "claude": "#ffa657",
+    "claudeShimmer": "#ffc680",
+    "promptBorder": "#79c0ff",
+    "promptBorderShimmer": "#a5d6ff",
+    "success": "#9afba1",
+    "warningShimmer": "#ffc680"
   }
 }
