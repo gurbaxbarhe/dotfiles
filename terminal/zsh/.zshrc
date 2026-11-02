@@ -81,6 +81,9 @@ alias gstp='git stash pop'
 
 alias gup='git pull'
 
+alias gwr='git worktree remove'
+alias gwrf='git worktree remove --force'
+
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 if [ -f '/Users/gurbaxbarhe/Desktop/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/gurbaxbarhe/Desktop/google-cloud-sdk/path.zsh.inc'; fi
