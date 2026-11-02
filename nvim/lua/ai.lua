@@ -8,6 +8,7 @@ local M = {}
 
 local PROVIDERS = { "windsurf", "copilot" }
 local PLUGIN = { windsurf = "windsurf.nvim", copilot = "copilot.lua" }
+local MODULE = { windsurf = "codeium", copilot = "copilot.command" }
 local state_file = vim.fn.stdpath("state") .. "/ai.json"
 
 M.state = { provider = "windsurf", enabled = true }
@@ -18,12 +19,9 @@ local function save()
 end
 
 local function load()
-  local ok, lines = pcall(vim.fn.readfile, state_file)
-  if ok and lines[1] then
-    local decoded_ok, decoded = pcall(vim.json.decode, lines[1])
-    if decoded_ok and type(decoded) == "table" then
-      M.state = vim.tbl_extend("force", M.state, decoded)
-    end
+  local ok, decoded = pcall(function() return vim.json.decode(vim.fn.readfile(state_file)[1]) end)
+  if ok and type(decoded) == "table" then
+    M.state = vim.tbl_extend("force", M.state, decoded)
   end
 end
 
@@ -33,20 +31,12 @@ local function start(provider)
     loaded[provider] = true
     return -- loading the plugin starts it
   end
-  if provider == "copilot" then
-    require("copilot.command").enable()
-  else
-    require("codeium").enable()
-  end
+  require(MODULE[provider]).enable()
 end
 
 local function stop(provider)
   if not loaded[provider] then return end
-  if provider == "copilot" then
-    require("copilot.command").disable()
-  else
-    require("codeium").disable()
-  end
+  require(MODULE[provider]).disable()
 end
 
 local function apply()
@@ -71,10 +61,8 @@ function M.switch()
   vim.notify("AI completion: " .. M.state.provider)
 end
 
--- Short label for the winbar, empty when off.
 function M.status()
-  if not M.state.enabled then return "" end
-  return M.state.provider == "copilot" and "AI:copilot" or "AI:windsurf"
+  return M.state.enabled and "AI:" .. M.state.provider or ""
 end
 
 local function accept()

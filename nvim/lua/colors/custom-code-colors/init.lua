@@ -2,6 +2,8 @@
 -- Select it with THEME = "custom" in init.lua or :Theme custom.
 local M = {}
 
+local BLUE, PURPLE, RED, WHITE, ORANGE = "#79b8ff", "#b392f0", "#f97583", "#e1e4e8", "#ffab70"
+
 function M.apply()
   require("github-theme").reset()
   -- The plugin's github_dark drifted to #30363d; these overrides restore the
@@ -16,7 +18,7 @@ function M.apply()
         bg3 = "#2f363d", -- indent guides, folds
         bg4 = "#444d56",
         fg0 = "#959da5",
-        fg1 = "#e1e4e8", -- editor foreground
+        fg1 = WHITE, -- editor foreground
         fg2 = "#959da5", -- statusline
         fg3 = "#444d56", -- line numbers
         sel0 = "#284566", -- visual selection
@@ -24,29 +26,29 @@ function M.apply()
         sel2 = "#5e5632", -- search
         syntax = {
           comment  = "#6a737d",
-          const    = "#79b8ff",
-          number   = "#79b8ff",
-          field    = "#e1e4e8",
-          operator = "#f97583",
-          builtin0 = "#79b8ff",
-          builtin2 = "#79b8ff",
-          func     = "#b392f0",
-          keyword  = "#f97583",
-          conditional = "#f97583",
-          statement   = "#f97583",
-          preproc     = "#f97583",
-          builtin1    = "#f97583",
+          const    = BLUE,
+          number   = BLUE,
+          field    = WHITE,
+          operator = RED,
+          builtin0 = BLUE,
+          builtin2 = BLUE,
+          func     = PURPLE,
+          keyword  = RED,
+          conditional = RED,
+          statement   = RED,
+          preproc     = RED,
+          builtin1    = RED,
           string   = "#9ecbff",
           regex    = "#dbedff",
-          type     = "#ffab70",
-          variable = "#e1e4e8",
-          param    = "#ffab70",
-          ident    = "#e1e4e8",
-          bracket  = "#e1e4e8",
+          type     = ORANGE,
+          variable = WHITE,
+          param    = ORANGE,
+          ident    = WHITE,
+          bracket  = WHITE,
           tag      = "#85e89d",
           dep      = "#fdaeb7",
         },
-        diag = { error = "#f97583", warn = "#ffea7f", info = "#79b8ff", hint = "#959da5" },
+        diag = { error = RED, warn = "#ffea7f", info = BLUE, hint = "#959da5" },
       },
     },
     -- Per-group overrides. Put the cursor on a token, run :Inspect to get its
@@ -55,86 +57,85 @@ function M.apply()
     --   #f97583 red      #85e89d green    #e1e4e8 white   #6a737d grey
     groups = {
       github_dark = {
-        ["@variable.parameter"] = { fg = "#ffab70" },
-        ["@variable.member"] = { fg = "#e1e4e8" },
+        ["@variable.parameter"] = { fg = ORANGE },
+        ["@variable.member"] = { fg = WHITE },
 
         -- LSP semantic tokens decide the final color, as in Cursor (VS Code's token->scope rules).
-        ["@lsp.type.namespace"]     = { fg = "#b392f0" },
-        ["@lsp.type.type"]          = { fg = "#b392f0" },
-        ["@lsp.type.struct"]        = { fg = "#b392f0" },
-        ["@lsp.type.class"]         = { fg = "#b392f0" },
-        ["@lsp.type.interface"]     = { fg = "#b392f0" },
-        ["@lsp.type.enum"]          = { fg = "#b392f0" },
-        ["@lsp.type.typeParameter"] = { fg = "#b392f0" },
-        ["@lsp.type.function"]      = { fg = "#b392f0" },
-        ["@lsp.type.method"]        = { fg = "#b392f0" },
+        ["@lsp.type.namespace"]     = { fg = PURPLE },
+        ["@lsp.type.type"]          = { fg = PURPLE },
+        ["@lsp.type.struct"]        = { fg = PURPLE },
+        ["@lsp.type.class"]         = { fg = PURPLE },
+        ["@lsp.type.interface"]     = { fg = PURPLE },
+        ["@lsp.type.enum"]          = { fg = PURPLE },
+        ["@lsp.type.typeParameter"] = { fg = PURPLE },
+        ["@lsp.type.function"]      = { fg = PURPLE },
+        ["@lsp.type.method"]        = { fg = PURPLE },
         -- ts_ls emits the deprecated "member" alias; superType is "method".
-        ["@lsp.type.member"]        = { fg = "#b392f0" },
-        ["@lsp.type.macro"]         = { fg = "#b392f0" },
-        ["@lsp.type.decorator"]     = { fg = "#b392f0" },
-        ["@lsp.type.variable"]      = { fg = "#e1e4e8" },
-        ["@lsp.type.property"]      = { fg = "#e1e4e8" },
-        ["@lsp.type.event"]         = { fg = "#e1e4e8" },
-        ["@lsp.type.parameter"]     = { fg = "#ffab70" },
-        ["@lsp.type.enumMember"]    = { fg = "#79b8ff" },
-        ["@lsp.type.number"]        = { fg = "#79b8ff" },
-        ["@lsp.type.regexp"]        = { fg = "#79b8ff" },
+        ["@lsp.type.member"]        = { fg = PURPLE },
+        ["@lsp.type.macro"]         = { fg = PURPLE },
+        ["@lsp.type.decorator"]     = { fg = PURPLE },
+        ["@lsp.type.variable"]      = { fg = WHITE },
+        ["@lsp.type.property"]      = { fg = WHITE },
+        ["@lsp.type.event"]         = { fg = WHITE },
+        ["@lsp.type.parameter"]     = { fg = ORANGE },
+        ["@lsp.type.enumMember"]    = { fg = BLUE },
+        ["@lsp.type.number"]        = { fg = BLUE },
+        ["@lsp.type.regexp"]        = { fg = BLUE },
         ["@lsp.type.string"]        = { fg = "#9ecbff" },
         ["@lsp.type.comment"]       = { fg = "#6a737d" },
-        ["@lsp.type.keyword"]       = { fg = "#f97583" },
-        ["@lsp.type.operator"]      = { fg = "#f97583" },
-        -- readonly / defaultLibrary modifiers all resolve to blue
-        ["@lsp.typemod.variable.readonly"]         = { fg = "#79b8ff" },
-        ["@lsp.typemod.property.readonly"]         = { fg = "#79b8ff" },
-        ["@lsp.typemod.variable.defaultLibrary"]   = { fg = "#79b8ff" },
-        ["@lsp.typemod.property.defaultLibrary"]   = { fg = "#79b8ff" },
+        ["@lsp.type.keyword"]       = { fg = RED },
+        ["@lsp.type.operator"]      = { fg = RED },
+        ["@lsp.typemod.variable.readonly"]         = { fg = BLUE },
+        ["@lsp.typemod.property.readonly"]         = { fg = BLUE },
+        ["@lsp.typemod.variable.defaultLibrary"]   = { fg = BLUE },
+        ["@lsp.typemod.property.defaultLibrary"]   = { fg = BLUE },
         -- Callables stay purple even from the default library, as in Cursor (.map, console.error).
-        ["@lsp.typemod.function.defaultLibrary"]   = { fg = "#b392f0" },
-        ["@lsp.typemod.method.defaultLibrary"]     = { fg = "#b392f0" },
-        ["@lsp.typemod.member.defaultLibrary"]     = { fg = "#b392f0" },
-        ["@lsp.typemod.class.defaultLibrary"]      = { fg = "#79b8ff" },
-        ["@lsp.typemod.type.defaultLibrary"]       = { fg = "#79b8ff" },
-        ["@lsp.typemod.interface.defaultLibrary"]  = { fg = "#79b8ff" },
+        ["@lsp.typemod.function.defaultLibrary"]   = { fg = PURPLE },
+        ["@lsp.typemod.method.defaultLibrary"]     = { fg = PURPLE },
+        ["@lsp.typemod.member.defaultLibrary"]     = { fg = PURPLE },
+        ["@lsp.typemod.class.defaultLibrary"]      = { fg = BLUE },
+        ["@lsp.typemod.type.defaultLibrary"]       = { fg = BLUE },
+        ["@lsp.typemod.interface.defaultLibrary"]  = { fg = BLUE },
 
         -- Ground truth from running VS Code's tokenizer (vscode-textmate +
         -- Cursor's JS grammar) against dark.json:
-        ["@string.escape"]                  = { fg = "#79b8ff" }, -- \n in strings
+        ["@string.escape"]                  = { fg = BLUE }, -- \n in strings
         ["@string.regexp.delimiter"]        = { fg = "#9ecbff" }, -- the / /
-        ["@character.special.javascript"]   = { fg = "#f97583" }, -- regex flags g,i
-        ["@character.special.typescript"]   = { fg = "#f97583" },
-        ["@character.special.tsx"]          = { fg = "#f97583" },
-        ["@operator.regex"]                 = { fg = "#f97583" }, -- + * ? |
-        ["@punctuation.delimiter.regex"]    = { fg = "#f97583" }, -- ^ $
+        ["@character.special.javascript"]   = { fg = RED }, -- regex flags g,i
+        ["@character.special.typescript"]   = { fg = RED },
+        ["@character.special.tsx"]          = { fg = RED },
+        ["@operator.regex"]                 = { fg = RED }, -- + * ? |
+        ["@punctuation.delimiter.regex"]    = { fg = RED }, -- ^ $
         ["@punctuation.bracket.regex"]      = { fg = "#dbedff" }, -- group ( )
-        ["@constant.regex"]                 = { fg = "#79b8ff" }, -- chars in [..]
-        ["@string.escape.regex"]            = { fg = "#79b8ff" }, -- \d \s \b
+        ["@constant.regex"]                 = { fg = BLUE }, -- chars in [..]
+        ["@string.escape.regex"]            = { fg = BLUE }, -- \d \s \b
         ["@constant.character.escape.regex"] = { fg = "#85e89d" }, -- \[ \] \.
-        ["@number.regex"]                   = { fg = "#f97583" }, -- {2,3}
-        ["@variable.builtin.regex"]         = { fg = "#79b8ff" }, -- .
+        ["@number.regex"]                   = { fg = RED }, -- {2,3}
+        ["@variable.builtin.regex"]         = { fg = BLUE }, -- .
 
         -- Destructuring source keys: `const { a: b }` renders `a` orange.
-        ["@ghkey"] = { fg = "#ffab70" },
+        ["@ghkey"] = { fg = ORANGE },
 
         -- try/catch/throw/finally are plain keywords in GitHub Dark
-        ["@keyword.exception"] = { fg = "#f97583" },
+        ["@keyword.exception"] = { fg = RED },
 
         -- JSDoc: VS Code renders @tag red, the whole {type} purple, names white
-        ["@type.jsdoc"]                = { fg = "#b392f0" },
-        ["@punctuation.bracket.jsdoc"] = { fg = "#b392f0" },
-        ["@punctuation.delimiter.jsdoc"] = { fg = "#e1e4e8" },
-        ["@variable.jsdoc"]            = { fg = "#e1e4e8" },
-        ["@variable.parameter.jsdoc"]  = { fg = "#e1e4e8" },
-        ["@property.jsdoc"]            = { fg = "#e1e4e8" },
-        ["@function.jsdoc"]            = { fg = "#e1e4e8" },
-        ["@keyword.jsdoc"]             = { fg = "#f97583" },
+        ["@type.jsdoc"]                = { fg = PURPLE },
+        ["@punctuation.bracket.jsdoc"] = { fg = PURPLE },
+        ["@punctuation.delimiter.jsdoc"] = { fg = WHITE },
+        ["@variable.jsdoc"]            = { fg = WHITE },
+        ["@variable.parameter.jsdoc"]  = { fg = WHITE },
+        ["@property.jsdoc"]            = { fg = WHITE },
+        ["@function.jsdoc"]            = { fg = WHITE },
+        ["@keyword.jsdoc"]             = { fg = RED },
 
         -- Bracket-pair colors (editorBracketHighlight.foreground1-6)
-        RainbowGH1 = { fg = "#79b8ff" },
-        RainbowGH2 = { fg = "#ffab70" },
-        RainbowGH3 = { fg = "#b392f0" },
+        RainbowGH1 = { fg = BLUE },
+        RainbowGH2 = { fg = ORANGE },
+        RainbowGH3 = { fg = PURPLE },
 
         WinBar   = { fg = "#1f2428", bg = "#477fbf", bold = true },
-        WinBarNC = { fg = "#e1e4e8", bg = "#1f2428" },
+        WinBarNC = { fg = WHITE, bg = "#1f2428" },
       },
     },
   })

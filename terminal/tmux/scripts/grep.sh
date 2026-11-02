@@ -6,15 +6,14 @@ dir=$1 pane=$2 cmd=$3
 root=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null || echo "$dir")
 cd "$root" || exit 1
 
-rg_cmd='rg --hidden --glob=!.git --column --line-number --no-heading --color=always --smart-case'
+rg_cmd='rg --hidden --glob=!.git --column --color=always --smart-case'
 sel=$(fzf --ansi --disabled --delimiter : --prompt 'grep> ' \
   --header "$root" \
   --bind "change:reload:sleep 0.1; [ -z {q} ] || $rg_cmd -- {q} || true" \
   --preview 'bat --color=always --style=numbers --highlight-line {2} -- {1}' \
   --preview-window 'right,55%,+{2}+3/3') || exit 0
 
-file=$(cut -d: -f1 <<<"$sel")
-line=$(cut -d: -f2 <<<"$sel")
+IFS=: read -r file line _ <<<"$sel"
 [ -n "$file" ] || exit 0
 
 if [ "$cmd" = "nvim" ]; then

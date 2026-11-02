@@ -34,5 +34,4 @@ color #adf "[bBrRuUfF]?"([^"\]|\\.)*"|[bBrRuUfF]?'([^'\]|\\.)*'"
 # Comments
 color #888 "(^|[[:blank:]])#.*"
 
-# Trailing whitespace
 color ,#122 "[[:space:]]+$"

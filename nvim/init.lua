@@ -14,10 +14,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local function merge_base()
+  local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
+  if vim.v.shell_error == 0 then return base end
+  vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
+end
+
 require("lazy").setup({
   {
     "projekt0n/github-nvim-theme",
-    lazy = false,
     priority = 1000,
     config = function()
       -- "github": github.com's code colors on the old backgrounds (lua/colors/github-dotcom).
@@ -42,7 +47,6 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
-    lazy = false,
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").setup()
@@ -139,10 +143,8 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>r", t.oldfiles,   { desc = "Recent files" })
       -- Files changed on this branch since it left the default branch, committed or not.
       vim.keymap.set("n", "<leader>dc", function()
-        local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
-        if vim.v.shell_error ~= 0 then
-          return vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
-        end
+        local base = merge_base()
+        if not base then return end
         t.git_files({ git_command = { "git", "diff", "--name-only", "--relative", base } })
       end, { desc = "Changed files on branch (PR)" })
       vim.keymap.set("n", "<leader>p", t.find_files, { desc = "Find files" })
@@ -177,7 +179,7 @@ require("lazy").setup({
         end,
       },
       update_focused_file = { enable = true },
-      filters = { dotfiles = false, custom = { "^.git$" } },
+      filters = { custom = { "^.git$" } },
       git = { ignore = false },
       on_attach = function(bufnr)
         local api = require("nvim-tree.api")
@@ -254,11 +256,6 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>db", gs.blame_line,   { desc = "Blame line" })
       -- Inline diffs in the file itself, deleted lines in red. No base means uncommitted
       -- changes; a base shows everything since the branch left the default branch.
-      local function merge_base()
-        local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
-        if vim.v.shell_error == 0 then return base end
-        vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
-      end
       local inline = false
       local function set_inline(on, base)
         inline = on
@@ -309,7 +306,6 @@ require("lazy").setup({
   -- Code colors inside diff buffers, like Octo's full PR diff (<leader>vp).
   {
     "barrettruth/diffs.nvim",
-    lazy = false,
     init = function()
       vim.g.diffs = { extra_filetypes = { "diff" } }
     end,
@@ -368,8 +364,7 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
     config = function()
       local function keys(map)
-        for action, lhs in pairs(map) do map[action] = { lhs = lhs } end
-        return map
+        return vim.tbl_map(function(lhs) return { lhs = lhs } end, map)
       end
       local comments = { add_comment = "<leader>ca", add_reply = "<leader>cr", delete_comment = "<leader>cd" }
       local threads = { resolve_thread = "<leader>ct", unresolve_thread = "<leader>cT" }
@@ -379,8 +374,8 @@ require("lazy").setup({
         -- Merging only through :Octo pr merge. A blank lhs skips the key; the picker needs one it can map.
         picker_config = { mappings = { merge_pr = { lhs = "<Plug>(octo-picker-merge-disabled)" } } },
         mappings = {
-          issue = keys(vim.deepcopy(comments)),
-          discussion = keys(vim.deepcopy(comments)),
+          issue = keys(comments),
+          discussion = keys(comments),
           pull_request = keys(vim.tbl_extend("error", comments, threads, {
             review_start = "<leader>vs", review_resume = "<leader>vr",
             list_changed_files = "<leader>vf", show_pr_diff = "<leader>vp",
@@ -464,7 +459,6 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Claude edits files under open buffers; reload them instead of clobbering on :w.
-vim.opt.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "TermClose", "TermLeave" }, {
   command = "if mode() != 'c' | checktime | endif",
 })
@@ -490,11 +484,11 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "WinEnter" }, {
   callback = function()
     if vim.api.nvim_win_get_config(0).relative ~= "" then return end
     local name = vim.api.nvim_buf_get_name(0)
-    local panel = vim.bo.buftype ~= "" or name:match("NvimTree_") or name:match("^diffview://")
+    local panel = vim.bo.buftype ~= "" or name:match("^diffview://")
     vim.wo.winbar = panel and "" or "%{%v:lua.winbar()%}"
   end,
 })
-vim.o.laststatus = 0 -- no bottom statusline; winbar replaces it
+vim.o.laststatus = 0
 vim.o.cmdheight = 0  -- windows reach the bottom; the command line shows only while in use
 vim.o.ruler = false
 
@@ -543,14 +537,11 @@ vim.keymap.set("x", "<M-Down>", ":m '>+1<cr>gv=gv", { desc = "Move selection dow
 -- Tell tmux which folder this pane is "in" (the current file's), so tmux
 -- splits from an nvim pane open there instead of where nvim was launched.
 if vim.env.TMUX then
-  local function set_tmux_dir(dir)
-    vim.system({ "tmux", "set-option", "-p", "-t", vim.env.TMUX_PANE, "@nvim_dir", dir })
-  end
   vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged" }, {
     callback = function()
       local dir = vim.fn.expand("%:p:h")
       if vim.bo.buftype ~= "" or vim.fn.isdirectory(dir) == 0 then dir = vim.fn.getcwd() end
-      set_tmux_dir(dir)
+      vim.system({ "tmux", "set-option", "-p", "-t", vim.env.TMUX_PANE, "@nvim_dir", dir })
     end,
   })
   vim.api.nvim_create_autocmd("VimLeavePre", {

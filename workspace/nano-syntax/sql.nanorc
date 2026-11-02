@@ -33,5 +33,4 @@ color #ccd ""[^"]*""
 color #888 "(^|[[:blank:]])--.*"
 color #888 start="/\*" end="\*/"
 
-# Trailing whitespace
 color ,#122 "[[:space:]]+$"

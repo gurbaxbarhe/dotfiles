@@ -20,6 +20,5 @@ else
 fi
 
 # Window ids only grow, so the lowest ids are the oldest parked panes.
-tmux list-windows -t _closed -F '#{window_id}' | tr -d @ | sort -n | sed "s/^/@/" |
-  awk -v keep="$KEEP" '{ ids[NR] = $0 } END { for (i = 1; i <= NR - keep; i++) print ids[i] }' |
-  while read -r old; do tmux kill-window -t "$old"; done
+tmux list-windows -t _closed -F '#{window_id}' | tr -d @ | sort -rn | tail -n +$((KEEP + 1)) |
+  while read -r old; do tmux kill-window -t "@$old"; done
