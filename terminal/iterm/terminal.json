@@ -27,18 +27,18 @@
   },
   "Prompt Before Closing 2" : false,
   "Ansi 3 Color (Dark)" : {
-    "Red Component" : 1,
+    "Red Component" : 1.0,
     "Color Space" : "sRGB",
-    "Blue Component" : 0,
+    "Blue Component" : 0.3411764705882353,
     "Alpha Component" : 1,
-    "Green Component" : 0.75686274509803919
+    "Green Component" : 0.6509803921568628
   },
   "Ansi 12 Color (Dark)" : {
-    "Red Component" : 0.45098039215686275,
+    "Red Component" : 0.4745098039215686,
     "Color Space" : "sRGB",
-    "Blue Component" : 1,
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.80784313725490198
+    "Green Component" : 0.7529411764705882
   },
   "Mouse Reporting" : true,
   "Disable Window Resizing" : false,
@@ -116,11 +116,11 @@
   "Option Key Sends" : 0,
   "Idle Code" : 0,
   "Ansi 13 Color (Dark)" : {
-    "Red Component" : 0.72707974910736084,
+    "Red Component" : 0.8235294117647058,
     "Color Space" : "P3",
-    "Blue Component" : 0.93046802282333374,
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.61696189641952515
+    "Green Component" : 0.6588235294117647
   },
   "Send Code When Idle" : false,
   "Selection Color" : {
@@ -192,11 +192,11 @@
     "Green Component" : 0.35333043336868286
   },
   "Ansi 1 Color (Dark)" : {
-    "Red Component" : 1,
+    "Red Component" : 1.0,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.40392156862745099,
+    "Blue Component" : 0.4470588235294118,
     "Alpha Component" : 1,
-    "Green Component" : 0.42745098039215684
+    "Green Component" : 0.4823529411764706
   },
   "Default Bookmark" : "No",
   "Ansi 14 Color (Light)" : {
@@ -221,11 +221,11 @@
     "text" : ""
   },
   "Ansi 9 Color (Dark)" : {
-    "Red Component" : 1,
+    "Red Component" : 1.0,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.40392156862745099,
+    "Blue Component" : 0.4470588235294118,
     "Alpha Component" : 1,
-    "Green Component" : 0.42745098039215684
+    "Green Component" : 0.4823529411764706
   },
   "Badge Color (Light)" : {
     "Red Component" : 0.92929404973983765,
@@ -273,11 +273,11 @@
   "Brighten Bold Text (Dark)" : false,
   "Name" : "terminal",
   "Ansi 11 Color (Dark)" : {
-    "Red Component" : 1,
+    "Red Component" : 1.0,
     "Color Space" : "sRGB",
-    "Blue Component" : 0,
+    "Blue Component" : 0.3411764705882353,
     "Alpha Component" : 1,
-    "Green Component" : 0.75686274509803919
+    "Green Component" : 0.6509803921568628
   },
   "AWDS Pane Directory" : "",
   "Ansi 14 Color" : {
@@ -441,11 +441,11 @@
   },
   "Icon" : 1,
   "Ansi 5 Color (Dark)" : {
-    "Red Component" : 0.74901960784313726,
+    "Red Component" : 0.8235294117647058,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.95294117647058818,
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.61176470588235299
+    "Green Component" : 0.6588235294117647
   },
   "Window Type" : 0,
   "Allow Title Setting" : true,
@@ -567,11 +567,11 @@
   },
   "Silence Bell" : false,
   "Ansi 4 Color (Dark)" : {
-    "Red Component" : 0.45098039215686275,
+    "Red Component" : 0.4745098039215686,
     "Color Space" : "sRGB",
-    "Blue Component" : 1,
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.80784313725490198
+    "Green Component" : 0.7529411764705882
   },
   "Ansi 9 Color (Light)" : {
     "Green Component" : 0.3333333432674408,

@@ -4,6 +4,10 @@
   "overrides": {
     "userMessageBackground": "#3b4450",
     "userMessageBackgroundHover": "#475262",
-    "briefLabelYou": "#73ceff"
+    "briefLabelYou": "#73ceff",
+    "permission": "#79c0ff",
+    "error": "#ff7b72",
+    "warning": "#ffa657",
+    "merged": "#d2a8ff"
   }
 }
