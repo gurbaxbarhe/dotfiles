@@ -81,7 +81,8 @@ Keys without `<leader>` (`]h`, `gd`) are typed as written.
 | `<leader>dc` | Fuzzy-find files changed on this branch, committed or not |
 | `<leader>du` | Toggle the branch's changes inline in this file (deleted lines in red); again to turn off |
 | `]h` / `[h` | Next / prev changed hunk |
-| `<leader>dp` `ds` `dr` `db` | Preview / stage / reset hunk, blame line |
+| `<leader>dp` `ds` `dx` `db` | Preview / stage / reset hunk, blame line |
+| `<leader>dr` / `dR` | Review every changed file in one view / plus untracked. `Cmd+→`/`←` next / previous file, `Cmd+↓`/`↑` next / previous change |
 | `<leader>dm` | PR view: list the branch's changed files; each opens with its changes inline |
 | `<leader>dd` | Same for uncommitted changes |
 | `<leader>dq` | Turn inline diffs off |

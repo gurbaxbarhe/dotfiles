@@ -250,7 +250,7 @@ require("lazy").setup({
       vim.keymap.set("n", "[h", function() gs.nav_hunk("prev") end, { desc = "Prev git hunk" })
       vim.keymap.set("n", "<leader>dp", gs.preview_hunk, { desc = "Preview hunk" })
       vim.keymap.set("n", "<leader>ds", gs.stage_hunk,   { desc = "Stage hunk" })
-      vim.keymap.set("n", "<leader>dr", gs.reset_hunk,   { desc = "Reset hunk" })
+      vim.keymap.set("n", "<leader>dx", gs.reset_hunk,   { desc = "Reset hunk" })
       vim.keymap.set("n", "<leader>db", gs.blame_line,   { desc = "Blame line" })
       -- Inline diffs in the file itself, deleted lines in red. No base means uncommitted
       -- changes; a base shows everything since the branch left the default branch.
@@ -312,6 +312,52 @@ require("lazy").setup({
     lazy = false,
     init = function()
       vim.g.diffs = { extra_filetypes = { "diff" } }
+    end,
+    config = function()
+      -- :Diff review splits the current window, so run it from a file window and let it take that window's place.
+      local function open_review(args)
+        local function is_host(win)
+          return vim.api.nvim_win_get_config(win).relative == ""
+            and vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "NvimTree"
+        end
+        local host = vim.api.nvim_get_current_win()
+        if not is_host(host) then
+          host = vim.tbl_filter(is_host, vim.api.nvim_tabpage_list_wins(0))[1]
+          if host then
+            vim.api.nvim_set_current_win(host)
+          else
+            local tree = vim.api.nvim_get_current_win()
+            local width = vim.api.nvim_win_get_width(tree)
+            vim.cmd("topleft vnew")
+            host = vim.api.nvim_get_current_win()
+            vim.api.nvim_win_set_width(tree, math.min(width, 40))
+          end
+        end
+        local count = #vim.api.nvim_tabpage_list_wins(0)
+        vim.cmd("Diff review " .. args)
+        if #vim.api.nvim_tabpage_list_wins(0) > count then vim.api.nvim_win_close(host, false) end
+      end
+      vim.keymap.set("n", "<leader>dr", function() open_review("++nountracked") end, { desc = "Review all changes" })
+      vim.keymap.set("n", "<leader>dR", function() open_review("") end, { desc = "Review all changes + untracked" })
+
+      -- Cycle with wraparound, like the tab keys. Quiet because cmdheight is 0.
+      local function cycle(step, wrap)
+        return function()
+          if not pcall(vim.cmd, "silent " .. step) then pcall(vim.cmd, "silent " .. wrap) end
+        end
+      end
+      -- iTerm sends Ctrl+A / Ctrl+E for Cmd+Left / Cmd+Right, and F16 / F17 for Cmd+Down / Cmd+Up,
+      -- which nvim can read as S-F4 / S-F5 depending on the terminal type.
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        pattern = "diffs://*",
+        callback = function(ev)
+          local function map(lhs, fn, desc) vim.keymap.set("n", lhs, fn, { buffer = ev.buf, desc = desc }) end
+          map("<C-e>", cycle("cnext", "cfirst"), "Next file")
+          map("<C-a>", cycle("cprev", "clast"), "Previous file")
+          for _, lhs in ipairs({ "<F16>", "<S-F4>" }) do map(lhs, cycle("lnext", "lfirst"), "Next change") end
+          for _, lhs in ipairs({ "<F17>", "<S-F5>" }) do map(lhs, cycle("lprev", "llast"), "Previous change") end
+        end,
+      })
     end,
   },
 
