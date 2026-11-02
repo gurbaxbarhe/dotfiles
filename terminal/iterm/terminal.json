@@ -12,11 +12,11 @@
     "Green Component" : 1
   },
   "Foreground Color (Dark)" : {
-    "Red Component" : 0.9411764705882353,
+    "Red Component" : 0.94117647058823528,
     "Color Space" : "sRGB",
     "Blue Component" : 0.9882352941176471,
     "Alpha Component" : 1,
-    "Green Component" : 0.9647058823529412
+    "Green Component" : 0.96470588235294119
   },
   "Cursor Text Color" : {
     "Red Component" : 1,
@@ -27,18 +27,18 @@
   },
   "Prompt Before Closing 2" : false,
   "Ansi 3 Color (Dark)" : {
-    "Red Component" : 1.0,
+    "Red Component" : 1,
     "Color Space" : "sRGB",
     "Blue Component" : 0.3411764705882353,
     "Alpha Component" : 1,
-    "Green Component" : 0.6509803921568628
+    "Green Component" : 0.65098039215686276
   },
   "Ansi 12 Color (Dark)" : {
-    "Red Component" : 0.4745098039215686,
+    "Red Component" : 0.47450980392156861,
     "Color Space" : "sRGB",
-    "Blue Component" : 1.0,
+    "Blue Component" : 1,
     "Alpha Component" : 1,
-    "Green Component" : 0.7529411764705882
+    "Green Component" : 0.75294117647058822
   },
   "Mouse Reporting" : true,
   "Disable Window Resizing" : false,
@@ -52,11 +52,11 @@
   },
   "Guid" : "6F77AB7D-B603-497A-969E-F249F8E333C7",
   "Cursor Color (Dark)" : {
-    "Red Component" : 0.4745098039215686,
+    "Red Component" : 0.47450980392156861,
     "Color Space" : "sRGB",
-    "Blue Component" : 1.0,
+    "Blue Component" : 1,
     "Alpha Component" : 1,
-    "Green Component" : 0.7529411764705882
+    "Green Component" : 0.75294117647058822
   },
   "Initial Text" : "",
   "Selection Color (Dark)" : {
@@ -116,9 +116,9 @@
   "Option Key Sends" : 0,
   "Idle Code" : 0,
   "Ansi 13 Color (Dark)" : {
-    "Red Component" : 0.8235294117647058,
+    "Red Component" : 0.82352941176470584,
     "Color Space" : "P3",
-    "Blue Component" : 1.0,
+    "Blue Component" : 1,
     "Alpha Component" : 1,
     "Green Component" : 0.6588235294117647
   },
@@ -182,7 +182,7 @@
     "Green Component" : 0
   },
   "Use Cursor Guide (Dark)" : false,
-  "AWDS Window Option" : "No",
+  "AWDS Window Option" : "Yes",
   "Visual Bell" : true,
   "Link Color (Light)" : {
     "Red Component" : 0.14513972401618958,
@@ -192,9 +192,9 @@
     "Green Component" : 0.35333043336868286
   },
   "Ansi 1 Color (Dark)" : {
-    "Red Component" : 1.0,
+    "Red Component" : 1,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.4470588235294118,
+    "Blue Component" : 0.44705882352941179,
     "Alpha Component" : 1,
     "Green Component" : 0.4823529411764706
   },
@@ -217,13 +217,13 @@
   "Title Components" : 34,
   "Semantic History" : {
     "editor" : "com.todesktop.230313mzl4w4u92",
-    "action" : "editor",
-    "text" : ""
+    "text" : "",
+    "action" : "editor"
   },
   "Ansi 9 Color (Dark)" : {
-    "Red Component" : 1.0,
+    "Red Component" : 1,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.4470588235294118,
+    "Blue Component" : 0.44705882352941179,
     "Alpha Component" : 1,
     "Green Component" : 0.4823529411764706
   },
@@ -245,11 +245,11 @@
 
   ],
   "Link Color (Dark)" : {
-    "Red Component" : 0.4745098039215686,
+    "Red Component" : 0.47450980392156861,
     "Color Space" : "sRGB",
-    "Blue Component" : 1.0,
+    "Blue Component" : 1,
     "Alpha Component" : 1,
-    "Green Component" : 0.7529411764705882
+    "Green Component" : 0.75294117647058822
   },
   "Custom Command" : "No",
   "Jobs to Ignore" : [
@@ -259,7 +259,7 @@
     "telnet"
   ],
   "Use Non-ASCII Font" : true,
-  "Custom Directory" : "Yes",
+  "Custom Directory" : "Advanced",
   "Ansi 8 Color (Light)" : {
     "Green Component" : 0.3333333432674408,
     "Blue Component" : 0.3333333432674408,
@@ -273,11 +273,11 @@
   "Brighten Bold Text (Dark)" : false,
   "Name" : "terminal",
   "Ansi 11 Color (Dark)" : {
-    "Red Component" : 1.0,
+    "Red Component" : 1,
     "Color Space" : "sRGB",
     "Blue Component" : 0.3411764705882353,
     "Alpha Component" : 1,
-    "Green Component" : 0.6509803921568628
+    "Green Component" : 0.65098039215686276
   },
   "AWDS Pane Directory" : "",
   "Ansi 14 Color" : {
@@ -386,9 +386,9 @@
     "Blue Component" : 1,
     "Red Component" : 1
   },
-  "AWDS Tab Directory" : "",
+  "AWDS Tab Directory" : "\/Users\/gurbaxbarhe\/Documents\/ScriptRunner\/Code\/Repositories",
   "Sync Title" : false,
-  "AWDS Window Directory" : "",
+  "AWDS Window Directory" : "\/Users\/gurbaxbarhe\/Documents\/ScriptRunner\/Code\/Repositories",
   "Ansi 11 Color" : {
     "Red Component" : 0.9259033203125,
     "Color Space" : "sRGB",
@@ -441,9 +441,9 @@
   },
   "Icon" : 1,
   "Ansi 5 Color (Dark)" : {
-    "Red Component" : 0.8235294117647058,
+    "Red Component" : 0.82352941176470584,
     "Color Space" : "sRGB",
-    "Blue Component" : 1.0,
+    "Blue Component" : 1,
     "Alpha Component" : 1,
     "Green Component" : 0.6588235294117647
   },
@@ -545,11 +545,11 @@
 
   },
   "Bold Color (Dark)" : {
-    "Red Component" : 0.4745098039215686,
+    "Red Component" : 0.47450980392156861,
     "Color Space" : "sRGB",
-    "Blue Component" : 1.0,
+    "Blue Component" : 1,
     "Alpha Component" : 1,
-    "Green Component" : 0.7529411764705882
+    "Green Component" : 0.75294117647058822
   },
   "Link Color" : {
     "Red Component" : 0.19802422821521759,
@@ -567,11 +567,11 @@
   },
   "Silence Bell" : false,
   "Ansi 4 Color (Dark)" : {
-    "Red Component" : 0.4745098039215686,
+    "Red Component" : 0.47450980392156861,
     "Color Space" : "sRGB",
-    "Blue Component" : 1.0,
+    "Blue Component" : 1,
     "Alpha Component" : 1,
-    "Green Component" : 0.7529411764705882
+    "Green Component" : 0.75294117647058822
   },
   "Ansi 9 Color (Light)" : {
     "Green Component" : 0.3333333432674408,
@@ -585,7 +585,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.67044717073440552
   },
-  "AWDS Tab Option" : "No",
+  "AWDS Tab Option" : "Yes",
   "Ansi 1 Color (Light)" : {
     "Green Component" : 0,
     "Blue Component" : 0,
@@ -651,7 +651,7 @@
     "Red Component" : 0.70980000495910645
   },
   "ASCII Ligatures" : false,
-  "AWDS Pane Option" : "No",
+  "AWDS Pane Option" : "Recycle",
   "Ansi 1 Color" : {
     "Red Component" : 0.7074432373046875,
     "Color Space" : "sRGB",
