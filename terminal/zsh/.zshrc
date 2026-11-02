@@ -85,3 +85,6 @@ zle -N _ignore_key
 bindkey '\e[1;2P' _ignore_key
 bindkey '\e[1;2Q' _ignore_key
 bindkey '\e[1;2R' _ignore_key
+
+#Work
+[ -f ~/.zshrc.work ] && source ~/.zshrc.work
