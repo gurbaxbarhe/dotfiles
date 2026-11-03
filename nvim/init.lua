@@ -14,6 +14,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local TREE_WIDTH = 32
+
 local function merge_base()
   local base = vim.trim(vim.fn.system({ "git", "merge-base", "origin/HEAD", "HEAD" }))
   if vim.v.shell_error == 0 then return base end
@@ -169,7 +171,7 @@ require("lazy").setup({
       end, desc = "Toggle focus: tree / file" },
     },
     opts = {
-      view = { width = 40, side = "right" },
+      view = { width = TREE_WIDTH, side = "right" },
       -- Label the root from the repo down (scriptrunner-backend/src), not the full path.
       renderer = {
         root_folder_label = function(path)
@@ -248,8 +250,20 @@ require("lazy").setup({
     config = function()
       local gs = require("gitsigns")
       gs.setup()
+      -- Backgrounds only, so code keeps its syntax colors. Same colors as diffs.nvim's review view.
+      local function tint_diffs()
+        for group, bg in pairs({
+          GitSignsAddLn = "#1e3322", GitSignsChangeLn = "#1e3322", GitSignsDeleteVirtLn = "#312022",
+          GitSignsAddInline = "#1a3a1a", GitSignsChangeInline = "#1a3a1a", GitSignsDeleteInline = "#3a1a1a",
+        }) do
+          vim.api.nvim_set_hl(0, group, { bg = bg })
+        end
+      end
+      tint_diffs()
+      vim.api.nvim_create_autocmd("ColorScheme", { callback = tint_diffs })
       vim.keymap.set("n", "]h", function() gs.nav_hunk("next") end, { desc = "Next git hunk" })
       vim.keymap.set("n", "[h", function() gs.nav_hunk("prev") end, { desc = "Prev git hunk" })
+      vim.keymap.set("n", "<leader>df", function() gs.nav_hunk("first") end, { desc = "First git hunk" })
       vim.keymap.set("n", "<leader>dp", gs.preview_hunk, { desc = "Preview hunk" })
       vim.keymap.set("n", "<leader>ds", gs.stage_hunk,   { desc = "Stage hunk" })
       vim.keymap.set("n", "<leader>dx", gs.reset_hunk,   { desc = "Reset hunk" })
@@ -290,6 +304,17 @@ require("lazy").setup({
     end,
   },
 
+  -- Scrollbar with marks for changes and diagnostics. v2 drops the gitsigns handler, so stay on v1.
+  {
+    "petertriho/nvim-scrollbar",
+    tag = "v1.0.0",
+    dependencies = { "lewis6991/gitsigns.nvim" },
+    config = function()
+      require("scrollbar").setup({ excluded_filetypes = { "NvimTree", "TelescopePrompt", "prompt", "lazy", "mason" } })
+      require("scrollbar.handlers.gitsigns").setup()
+    end,
+  },
+
   -- Merge conflicts: co / ct / cb / c0 keep ours / theirs / both / none, ]x [x jump.
   { "akinsho/git-conflict.nvim", version = "*", config = true },
 
@@ -326,7 +351,7 @@ require("lazy").setup({
             local width = vim.api.nvim_win_get_width(tree)
             vim.cmd("topleft vnew")
             host = vim.api.nvim_get_current_win()
-            vim.api.nvim_win_set_width(tree, math.min(width, 40))
+            vim.api.nvim_win_set_width(tree, math.min(width, TREE_WIDTH))
           end
         end
         local count = #vim.api.nvim_tabpage_list_wins(0)

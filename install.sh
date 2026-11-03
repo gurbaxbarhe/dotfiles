@@ -63,6 +63,8 @@ link claude/statusline.sh "$HOME/.claude/statusline.sh"
 
 # iTerm: Cmd+Shift+T reopens the last closed tab or pane (Edit > Undo Close)
 defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "Undo Close" '@$t'
+# iTerm: keep the tab bar with one tab, otherwise closing down to one tab shrinks the window
+defaults write com.googlecode.iterm2 HideTab -bool false
 
 if [ -n "${TMUX:-}" ]; then
   tmux source-file "$HOME/.tmux.conf" && echo "tmux config reloaded"

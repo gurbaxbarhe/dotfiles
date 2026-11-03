@@ -65,7 +65,7 @@ Space is for actions. Cmd is for motion and regular vim.
 | `<leader>dm` / `dd` | Pick a changed file on this branch / uncommitted file, with inline diffs on |
 | `<leader>du` / `dq` | Toggle inline diffs for this branch / turn them off |
 | `<leader>dc` | Pick a changed file on this branch |
-| `]h` / `[h` | Next / previous hunk |
+| `]h` / `[h` / `<leader>df` | Next / previous / first hunk. The scrollbar marks where they are |
 | `<leader>dp` / `ds` / `dx` / `db` | Preview / stage / reset hunk, blame line |
 | `<leader>dh` | File history |
 

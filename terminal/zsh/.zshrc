@@ -86,5 +86,10 @@ bindkey '\e[1;2P' _ignore_key
 bindkey '\e[1;2Q' _ignore_key
 bindkey '\e[1;2R' _ignore_key
 
+# Soft diff tints for Claude Code, whose ansi theme can only use 256-palette colors. Same tints as nvim.
+if [[ $TERM_PROGRAM == iTerm.app && -t 1 ]]; then
+  printf '\e]4;22;rgb:1e/33/22\e\\\e]4;52;rgb:31/20/22\e\\\e]4;28;rgb:1a/3a/1a\e\\\e]4;88;rgb:3a/1a/1a\e\\'
+fi
+
 #Work
 [ -f ~/.zshrc.work ] && source ~/.zshrc.work

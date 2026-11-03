@@ -116,11 +116,11 @@
   "Option Key Sends" : 0,
   "Idle Code" : 0,
   "Ansi 13 Color (Dark)" : {
-    "Red Component" : 0.82352941176470584,
-    "Color Space" : "P3",
-    "Blue Component" : 1,
+    "Red Component" : 1.0,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.4470588235294118,
     "Alpha Component" : 1,
-    "Green Component" : 0.6588235294117647
+    "Green Component" : 0.4823529411764706
   },
   "Send Code When Idle" : false,
   "Selection Color" : {
@@ -141,11 +141,11 @@
     "Green Component" : 0.97999999999999998
   },
   "Ansi 10 Color (Dark)" : {
-    "Red Component" : 0.60392156862745094,
+    "Red Component" : 0.6470588235294118,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.63137254901960782,
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.98431372549019602
+    "Green Component" : 0.8392156862745098
   },
   "Ansi 10 Color" : {
     "Red Component" : 0.3450070321559906,
@@ -235,11 +235,11 @@
     "Green Component" : 0.25479039549827576
   },
   "Ansi 14 Color (Dark)" : {
-    "Red Component" : 0.33725490196078434,
+    "Red Component" : 1.0,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.8666666666666667,
+    "Blue Component" : 0.4470588235294118,
     "Alpha Component" : 1,
-    "Green Component" : 0.83137254901960789
+    "Green Component" : 0.4823529411764706
   },
   "Tags" : [
 
@@ -273,11 +273,11 @@
   "Brighten Bold Text (Dark)" : false,
   "Name" : "terminal",
   "Ansi 11 Color (Dark)" : {
-    "Red Component" : 1,
+    "Red Component" : 0.8235294117647058,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.3411764705882353,
+    "Blue Component" : 1.0,
     "Alpha Component" : 1,
-    "Green Component" : 0.65098039215686276
+    "Green Component" : 0.6588235294117647
   },
   "AWDS Pane Directory" : "",
   "Ansi 14 Color" : {
@@ -397,11 +397,11 @@
     "Green Component" : 0.8833775520324707
   },
   "Ansi 8 Color (Dark)" : {
-    "Red Component" : 0.33333333333333331,
+    "Red Component" : 0.5686274509803921,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.33333333333333331,
+    "Blue Component" : 0.6313725490196078,
     "Alpha Component" : 1,
-    "Green Component" : 0.33333333333333331
+    "Green Component" : 0.596078431372549
   },
   "Ansi 10 Color (Light)" : {
     "Green Component" : 1,
