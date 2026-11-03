@@ -22,6 +22,26 @@ local function merge_base()
   vim.notify("No merge base with origin/HEAD", vim.log.levels.WARN)
 end
 
+-- Picker preview showing a file's changes in diff colors. No base means uncommitted changes.
+local function diff_previewer(base)
+  local putils = require("telescope.previewers.utils")
+  return require("telescope.previewers").new_buffer_previewer({
+    title = "Diff",
+    get_buffer_by_name = function(_, entry) return entry.value end,
+    define_preview = function(self, entry)
+      local path = vim.fn.fnamemodify(entry.path or entry.value, ":.")
+      local args = entry.status == "??" and { "--no-index", "--", "/dev/null", path } or { base or "HEAD", "--", path }
+      putils.job_maker(vim.list_extend({ "git", "--no-pager", "diff" }, args), self.state.bufnr, {
+        value = entry.value,
+        bufname = self.state.bufname,
+        callback = function(buf)
+          if vim.api.nvim_buf_is_valid(buf) then vim.bo[buf].filetype = "diff" end
+        end,
+      })
+    end,
+  })
+end
+
 require("lazy").setup({
   {
     "projekt0n/github-nvim-theme",
@@ -288,14 +308,15 @@ require("lazy").setup({
         if not base then return end
         set_inline(true, base)
         require("telescope.builtin").git_files({ prompt_title = "Changed on branch",
-          git_command = { "git", "diff", "--name-only", "--relative", base } })
+          git_command = { "git", "diff", "--name-only", "--relative", base },
+          previewer = diff_previewer(base) })
       end, { desc = "PR changes, inline" })
       vim.keymap.set("n", "<leader>dd", function()
         if vim.fn.system({ "git", "status", "--porcelain" }) == "" then
           return vim.notify("No uncommitted changes")
         end
         set_inline(true)
-        require("telescope.builtin").git_status({ prompt_title = "Uncommitted changes" })
+        require("telescope.builtin").git_status({ prompt_title = "Uncommitted changes", previewer = diff_previewer() })
       end, { desc = "Uncommitted changes, inline" })
       vim.keymap.set("n", "<leader>dq", function()
         set_inline(false)
@@ -312,6 +333,26 @@ require("lazy").setup({
     config = function()
       require("scrollbar").setup({ excluded_filetypes = { "NvimTree", "TelescopePrompt", "prompt", "lazy", "mason" } })
       require("scrollbar.handlers.gitsigns").setup()
+    end,
+  },
+
+  -- PR review in one scrolling diff. Review keys only apply inside its sessions.
+  {
+    "undont/differ.nvim",
+    build = "make go-build",
+    cmd = "Differ",
+    keys = { { "<leader>e", "<cmd>Differ pr<cr>", desc = "Pick a PR" } },
+    config = function()
+      require("differ").setup({
+        keymaps = {
+          comment = "<leader>ca", reply = "<leader>cr", delete_comment = "<leader>cd",
+          resolve_thread = "<leader>ct", review_submit = "<leader>vs",
+          review_discard = "<leader>vd", overview = "<leader>vo",
+          -- git-conflict.nvim handles merge conflicts.
+          choose_ours = false, choose_theirs = false, choose_base = false,
+          choose_all = false, choose_none = false,
+        },
+      })
     end,
   },
 

@@ -9,6 +9,7 @@ brew "bat"           # syntax-highlighted previews
 brew "git-delta"     # side-by-side git diffs
 brew "lazygit"
 brew "gh"
+brew "go"             # builds differ.nvim's PR review helper
 brew "zsh-autosuggestions"
 brew "nano"
 brew "tree-sitter-cli"      # builds nvim-treesitter parsers
