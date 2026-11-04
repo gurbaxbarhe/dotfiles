@@ -83,7 +83,7 @@ Space is for actions. Cmd is for motion and regular vim.
 | `]q` / `[q`, `]t` / `[t` | Next / previous file, next / previous thread |
 | `<C-c>` | Close the review |
 
-`<leader>e` tries differ.nvim on the same comment and review keys, `<leader>vo` for its overview. `:Octo review browse` reads a PR without starting a review. Merging only works through `:Octo pr merge`. Less used keys are under `<leader>z`.
+`:Octo review browse` reads a PR without starting a review. Merging only works through `:Octo pr merge`. Less used keys are under `<leader>z`.
 
 **AI**
 

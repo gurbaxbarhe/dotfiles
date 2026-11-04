@@ -88,6 +88,21 @@ function M.apply()
         ["@keyword.modifier.sql"] = { fg = WHITE },
         ["@function.call.sql"] = { fg = WHITE },
 
+        -- C++: primitive types are keywords, calls blue, declared names purple, members and operators plain.
+        ["@type.builtin.cpp"] = { fg = RED },
+        ["@keyword.operator.cpp"] = { fg = RED },
+        ["@function.call.cpp"] = { fg = BLUE },
+        ["@function.method.call.cpp"] = { fg = BLUE },
+        ["@constructor.cpp"] = { fg = BLUE },
+        ["@variable.builtin.cpp"] = { fg = BLUE },
+        ["@type.definition.cpp"] = { fg = PURPLE },
+        ["@constant.macro.cpp"] = { fg = PURPLE },
+        ["@operator.cpp"] = { fg = WHITE },
+        ["@variable.member.cpp"] = { fg = WHITE },
+        ["@property.cpp"] = { fg = WHITE },
+        ["@module.cpp"] = { fg = WHITE },
+        ["@constant.cpp"] = { fg = BLUE },
+
         -- JSX: lowercase tags are plain.
         ["@tag.builtin.tsx"] = { fg = WHITE },
         ["@tag.builtin.javascript"] = { fg = WHITE },

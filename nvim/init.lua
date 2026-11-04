@@ -336,26 +336,6 @@ require("lazy").setup({
     end,
   },
 
-  -- PR review in one scrolling diff. Review keys only apply inside its sessions.
-  {
-    "undont/differ.nvim",
-    build = "make go-build",
-    cmd = "Differ",
-    keys = { { "<leader>e", "<cmd>Differ pr<cr>", desc = "Pick a PR" } },
-    config = function()
-      require("differ").setup({
-        keymaps = {
-          comment = "<leader>ca", reply = "<leader>cr", delete_comment = "<leader>cd",
-          resolve_thread = "<leader>ct", review_submit = "<leader>vs",
-          review_discard = "<leader>vd", overview = "<leader>vo",
-          -- git-conflict.nvim handles merge conflicts.
-          choose_ours = false, choose_theirs = false, choose_base = false,
-          choose_all = false, choose_none = false,
-        },
-      })
-    end,
-  },
-
   -- Merge conflicts: co / ct / cb / c0 keep ours / theirs / both / none, ]x [x jump.
   { "akinsho/git-conflict.nvim", version = "*", config = true },
 
@@ -459,6 +439,23 @@ require("lazy").setup({
         },
       })
       require("octo-bot-comments").setup()
+      -- Octo's changed-files preview has no file header, so diffs.nvim can't tell the language.
+      require("octo.pickers.telescope.previewers").changed_files = {
+        new = function()
+          return require("telescope.previewers").new_buffer_previewer({
+            title = "Diff",
+            keep_last_buf = true, -- Enter opens this buffer
+            get_buffer_by_name = function(_, entry) return entry.change.filename end,
+            define_preview = function(self, entry)
+              local file, patch = entry.change.filename, entry.change.patch
+              if not patch then return end
+              local lines = vim.split(("diff --git a/%s b/%s\n%s"):format(file, file, patch), "\n")
+              vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
+              vim.bo[self.state.bufnr].filetype = "diff"
+            end,
+          })
+        end,
+      }
     end,
     keys = {
       { "<leader>o", "<cmd>Octo pr list<cr>", desc = "GitHub PRs" },
